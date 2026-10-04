@@ -527,3 +527,54 @@ body {
     padding: 3px 2px;
   }
 }
+
+/* ==========================================
+   BOTONERA FÍSICA INTERACTIVA SOBRE LA TELE
+   ========================================== */
+.tv-interactive-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 6; /* Por encima de la tele y estática pero interactuable */
+  pointer-events: none; /* Permite clics por defecto en el fondo */
+}
+
+/* Estilo base para los "hotspots" o áreas activas */
+.tv-hotspot {
+  position: absolute;
+  pointer-events: auto; /* Activa el clic solo en los botones */
+  background: rgba(0, 255, 255, 0.0); /* Pon 0.15 temporalmente si quieres verlos mientras alineas */
+  border: 1px dashed rgba(0, 243, 255, 0); /* Invisible por defecto */
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+/* Efecto hover retro: se ilumina sutilmente en cian neón al pasar el ratón */
+.tv-hotspot:hover {
+  background: rgba(0, 243, 255, 0.2);
+  border: 1px solid var(--neon-cyan);
+  box-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.tv-hotspot:active {
+  background: rgba(255, 30, 30, 0.4); /* Destello rojo al pulsar */
+}
+
+/* --- COORDENADAS EXACTAS DE LA BOTONERA (Adaptadas a tu imagen 1024x725) --- */
+/* Botones pequeños verticales de la parte superior derecha */
+.btn-section-1 { top: 48.5%; right: 12.5%; width: 5%; height: 4.5%; border-radius: 50%; }
+.btn-section-2 { top: 54.5%; right: 12.5%; width: 5%; height: 4.5%; border-radius: 50%; }
+.btn-section-3 { top: 60.5%; right: 12.5%; width: 5%; height: 4.5%; border-radius: 50%; }
+.btn-section-4 { top: 66.5%; right: 12.5%; width: 5%; height: 4.5%; border-radius: 50%; }
+
+/* Gran perilla inferior derecha (Selector de canales / Siguiente) */
+.btn-big-dial {
+  top: 73.5%;
+  right: 9.5%;
+  width: 13.5%;
+  height: 19%;
+  border-radius: 50%; /* Perfectamente circular sobre la rueda */
+}
