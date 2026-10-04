@@ -5,14 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>XPIRAL</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Fuentes temáticas de Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- 1. Pantalla de Intro Retro 80s (Barra de Sangre & Cuchillo) -->
+  <!-- 1. Pantalla de Intro Retro 80s -->
   <div id="intro-screen">
     <div class="loader-container">
       <p class="retro-title">LOADING PORTFOLIO...</p>
@@ -44,35 +43,22 @@
         <img src="tv.png" alt="Televisor CRT Retro" class="tv-frame-img">
         
         <div class="tv-screen-area">
-          <!-- Capa de estática (static.gif) -->
           <div id="tv-static" class="tv-static"></div>
-          
-          <!-- Líneas de escaneo scanlines -->
           <div class="scanlines"></div>
-          
-          <!-- Contenido dinámico (Texto / Galería) -->
-          <div id="tv-content" class="screen-content">
-            <!-- El JS inyecta las vistas aquí -->
-          </div>
+          <div id="tv-content" class="screen-content"></div>
         </div>
 
         <!-- ==========================================
-           PANEL DE BOTONES INTERACTIVOS SOBRE EL PNG
-           ========================================== -->
+            PANEL DE BOTONES INTERACTIVOS SOBRE EL PNG
+            ========================================== -->
         <div class="tv-interactive-panel">
-          <!-- Botones pequeños verticales de la derecha -->
-          <button class="tv-hotspot btn-section-1" data-type="home" title="Canal 1: Inicio"></button>
-          <button class="tv-hotspot btn-section-2" data-type="gallery" title="Canal 2: Obras"></button>
-          <button class="tv-hotspot btn-section-3" data-type="bio" title="Canal 3: Biografía"></button>
-          <button class="tv-hotspot btn-section-4" data-type="contact" title="Canal 4: Contacto"></button>
-
-          <!-- Perilla grande inferior derecha -->
-          <button class="tv-hotspot btn-big-dial" title="Siguiente Obra / Acción"></button>
+          <!-- Únicamente el dial grande superior derecho -->
+          <button class="tv-hotspot btn-big-dial" title="Siguiente Obra"></button>
         </div>
 
       </div>
 
-      <!-- Estantería con Carrusel Horizontal VHS (4 Secciones SPA) -->
+      <!-- Estantería con Carrusel Horizontal VHS -->
       <div class="vhs-shelf">
         <div class="shelf-header">
           <span class="shelf-arrow">◀</span>
@@ -81,25 +67,18 @@
         </div>
         
         <div class="tape-slider" id="tape-slider">
-          <!-- Cinta 1: Inicio -->
           <button class="vhs-tape-card" data-type="home">
             <img src="vhs.png" alt="Cinta VHS Inicio" class="vhs-tape-img">
             <span class="vhs-sticker-label">01 // INICIO</span>
           </button>
-
-          <!-- Cinta 2: Galería / Obras -->
           <button class="vhs-tape-card" data-type="gallery">
             <img src="vhs.png" alt="Cinta VHS Galería" class="vhs-tape-img">
             <span class="vhs-sticker-label">02 // GALERIA</span>
           </button>
-
-          <!-- Cinta 3: Biografía -->
           <button class="vhs-tape-card" data-type="bio">
             <img src="vhs.png" alt="Cinta VHS Bio" class="vhs-tape-img">
             <span class="vhs-sticker-label">03 // SOBRE MI</span>
           </button>
-
-          <!-- Cinta 4: Contacto & Redes -->
           <button class="vhs-tape-card" data-type="contact">
             <img src="vhs.png" alt="Cinta VHS Contacto" class="vhs-tape-img">
             <span class="vhs-sticker-label">04 // CONTACTO</span>
@@ -110,7 +89,6 @@
     </div>
   </main>
 
-  <!-- Enlace a JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
