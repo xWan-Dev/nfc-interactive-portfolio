@@ -12,11 +12,19 @@
 </head>
 <body>
 
-  <!-- 1. Pantalla de Intro (Animación Cuchillo) -->
+  <!-- 1. Pantalla de Intro Retro 80s (Barra de Sangre & Cuchillo) -->
   <div id="intro-screen">
-    <div class="knife-container">
-      <div class="knife-slash"></div>
-      <p class="intro-text">ENTRANDO...</p>
+    <div class="loader-container">
+      <p class="retro-title">LOADING PORTFOLIO...</p>
+      
+      <div class="progress-bar-track">
+        <div class="blood-trail" id="blood-trail"></div>
+        <img src="chucky-knife.png" alt="Cuchillo Chucky" class="knife-loader" id="knife-loader">
+      </div>
+
+      <div class="retro-counter">
+        <span id="load-percentage">0</span>%
+      </div>
     </div>
   </div>
 
