@@ -3,36 +3,20 @@
 // ==========================================
 
 document.addEventListener("DOMContentLoaded", () => {
-  // --- REPRODUCCIÓN DE FRAGMENTOS DE AUDIO VHS (vhs-sound.mp3) ---
   const AUDIO_SRC = "vhs-sound.mp3"; 
 
-  // Función genérica para reproducir un rango exacto de segundos del MP3
   function playAudioSegment(startTime, duration) {
     const audio = new Audio(AUDIO_SRC);
     audio.currentTime = startTime;
     audio.play().catch(err => console.log("Permiso de audio requerido en móvil:", err));
-
-    setTimeout(() => {
-      audio.pause();
-    }, duration * 1000);
+    setTimeout(() => { audio.pause(); }, duration * 1000);
   }
 
-  // 1. Clic rápido (Parte 1: de 0.0s a 0.8s) -> Para botones pequeños / galería
-  function playQuickClick() {
-    playAudioSegment(0.0, 0.8);
-  }
+  function playQuickClick() { playAudioSegment(0.0, 0.8); }
+  function playTapeMotor() { playAudioSegment(1.0, 1.5); }
+  function playHeavyEject() { playAudioSegment(4.8, 1.8); }
 
-  // 2. Ruido de arrastre/estática (Parte 2: de 1.0s a 2.5s) -> Para el cambio de canal
-  function playTapeMotor() {
-    playAudioSegment(1.0, 1.5);
-  }
-
-  // 3. Golpe pesado de cassette (Parte 3: de 4.8s a 6.8s) -> Para seleccionar cinta VHS
-  function playHeavyEject() {
-    playAudioSegment(4.8, 1.8);
-  }
-
-  // --- 1. PANTALLA DE CARGA CON CUCHILLO ---
+  // --- 1. PANTALLA DE CARGA ---
   const introScreen = document.getElementById("intro-screen");
   const bloodTrail = document.getElementById("blood-trail");
   const knifeLoader = document.getElementById("knife-loader");
@@ -42,28 +26,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadInterval = setInterval(() => {
     progress += Math.floor(Math.random() * 5) + 2;
     if (progress > 100) progress = 100;
-
     if (bloodTrail) bloodTrail.style.width = `${progress}%`;
     if (knifeLoader) knifeLoader.style.left = `${progress}%`;
     if (loadPercentage) loadPercentage.textContent = progress;
 
     if (progress >= 100) {
       clearInterval(loadInterval);
-      setTimeout(() => {
-        if (introScreen) introScreen.classList.add("fade-out");
-      }, 400);
+      setTimeout(() => { if (introScreen) introScreen.classList.add("fade-out"); }, 400);
     }
   }, 40);
 
-  // --- 2. GALERÍA FLOTANTE EN EL FONDO ---
+  // --- 2. GALERÍA FLOTANTE ---
   const floatingGallery = document.getElementById("floating-gallery");
-  const sampleImages = [
-    "demo1.jpg",
-    "demo2.jpg",
-    "demo3.jpg",
-    "chucky-knife.png"
-  ];
-
+  const sampleImages = ["demo1.jpg", "demo2.jpg", "demo3.jpg", "chucky-knife.png"];
   if (floatingGallery) {
     for (let i = 0; i < 12; i++) {
       const item = document.createElement("img");
@@ -77,38 +52,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // --- 3. REPRODUCTOR Y CAMBIO DE CINTAS VHS EN LA TV ---
+  // --- 3. REPRODUCTOR TV ---
   const tvContent = document.getElementById("tv-content");
   const tvStatic = document.getElementById("tv-static");
   const tapeButtons = document.querySelectorAll(".vhs-tape-card");
 
   let currentGalleryIndex = 0;
-  const galleryImages = [
-    "demo1.jpg",
-    "demo2.jpg",
-    "demo3.jpg"
-  ];
+  const galleryImages = ["demo1.jpg", "demo2.jpg", "demo3.jpg"];
 
-  // Función de transición de canal sincronizada con tu static.gif y el audio del motor
   function switchChannel(renderCallback) {
-    playTapeMotor(); // Reproduce el tramo de estática/arrastre del audio (1.5s)
-    
-    if (tvStatic) tvStatic.classList.add("active"); // Muestra tu static.gif animado
-    
-    // Hacemos coincidir el tiempo de cambio con la duración del efecto visual/sonoro
+    playTapeMotor();
+    if (tvStatic) tvStatic.classList.add("active");
     setTimeout(() => {
-      renderCallback(); // Cambia el contenido interno de la pantalla
-      
-      setTimeout(() => {
-        if (tvStatic) tvStatic.classList.remove("active"); // Oculta el GIF de estática
-      }, 300);
+      renderCallback();
+      setTimeout(() => { if (tvStatic) tvStatic.classList.remove("active"); }, 300);
     }, 600);
   }
 
   const views = {
     home: () => `
       <div class="vhs-screen-layout">
-        <h1 class="neon-title">TU NOMBRE</h1>
+        <h1 class="neon-title">XPIRAL</h1>
         <p class="neon-subtitle">ARTE & ILUSTRACIÓN 80s</p>
         <div class="vhs-badge">PLAY ▶ 0:00:01</div>
         <p class="vhs-prompt">Selecciona o desliza una cinta para reproducir contenido.</p>
@@ -120,10 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <span class="vhs-badge">OBRAS [${currentGalleryIndex + 1}/${galleryImages.length}]</span>
         </div>
         <div class="gallery-frame">
-          <img src="${galleryImages[currentGalleryIndex]}" 
-               alt="Artwork" 
-               class="gallery-display-img"
-               onerror="this.src='chucky-knife.png'">
+          <img src="${galleryImages[currentGalleryIndex]}" alt="Artwork" class="gallery-display-img" onerror="this.src='chucky-knife.png'">
         </div>
         <div class="gallery-nav">
           <button id="prev-art-btn" class="tv-btn">◀ ANTERIOR</button>
@@ -134,9 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     bio: () => `
       <div class="vhs-screen-layout">
         <h2 class="neon-title-sm">BIOGRAFÍA</h2>
-        <p class="bio-text">
-          Ilustración & Arte visual inspirado en el cine de terror de los 80s, slashers, estética VHS y la cultura pop retro.
-        </p>
+        <p class="bio-text">Ilustración & Arte visual inspirado en el cine de terror de los 80s, slashers, estética VHS y la cultura pop retro.</p>
         <div class="vhs-badge">HI-FI STEREO</div>
       </div>
     `,
@@ -149,14 +108,15 @@ document.addEventListener("DOMContentLoaded", () => {
     `
   };
 
+  tvContent.innerHTML = views.home();
+
+  // Control mediante cintas VHS de la estantería
   tapeButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      playHeavyEject(); // Parte 3: Golpe pesado al presionar/insertar cinta VHS
+      playHeavyEject();
       const type = button.getAttribute("data-type");
-      
       button.classList.add("ejecting");
       setTimeout(() => button.classList.remove("ejecting"), 300);
-
       if (views[type]) {
         switchChannel(() => {
           tvContent.innerHTML = views[type]();
@@ -172,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (prevBtn) {
       prevBtn.addEventListener("click", () => {
-        playQuickClick(); // Parte 1: Clic metálico corto al cambiar foto
+        playQuickClick();
         currentGalleryIndex = (currentGalleryIndex - 1 + galleryImages.length) % galleryImages.length;
         switchChannel(() => {
           tvContent.innerHTML = views.gallery();
@@ -183,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (nextBtn) {
       nextBtn.addEventListener("click", () => {
-        playQuickClick(); // Parte 1: Clic metálico corto al cambiar foto
+        playQuickClick();
         currentGalleryIndex = (currentGalleryIndex + 1) % galleryImages.length;
         switchChannel(() => {
           tvContent.innerHTML = views.gallery();
@@ -193,41 +153,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // --- INTERACTIVIDAD DE LA BOTONERA FÍSICA DE LA TELEVISIÓN ---
-  document.querySelectorAll(".tv-interactive-panel .tv-hotspot").forEach(hotspot => {
-    hotspot.addEventListener("click", () => {
-      
-      // 1. Si se pulsa uno de los 4 botones pequeños (cambio de sección)
-      const targetType = hotspot.getAttribute("data-type");
-      if (targetType && views[targetType]) {
-        playHeavyEject(); // Efecto de cambio de cinta/canal
-        switchChannel(() => {
-          tvContent.innerHTML = views[targetType]();
-          if (targetType === "gallery") bindGalleryEvents();
-        });
-        return;
-      }
+  // --- INTERACTIVIDAD ÚNICAMENTE DEL DIAL GRANDE ---
+  const bigDial = document.querySelector(".btn-big-dial");
+  if (bigDial) {
+    bigDial.addEventListener("click", () => {
+      const isGalleryActive = document.querySelector(".tv-gallery-container") !== null;
 
-      // 2. Si se pulsa EL DIAL GRANDE (marcado en rojo)
-      if (hotspot.classList.contains("btn-big-dial")) {
-        // Comprobamos estrictamente si el contenedor de la galería está activo en pantalla
-        const isGalleryActive = document.querySelector(".tv-gallery-container") !== null;
-
-        // Si NO estamos en la galería, el dial no hace nada
-        if (!isGalleryActive) {
-          playQuickClick();
-          return;
-        }
-
-        // Si SÍ estamos en la galería, avanza la foto de forma sincronizada
+      if (!isGalleryActive) {
         playQuickClick();
-        currentGalleryIndex = (currentGalleryIndex + 1) % galleryImages.length;
-        switchChannel(() => {
-          tvContent.innerHTML = views.gallery();
-          bindGalleryEvents();
-        });
+        return; // Si no estás en la galería, el dial no cambia de foto ni hace nada destructivo
       }
+
+      playQuickClick();
+      currentGalleryIndex = (currentGalleryIndex + 1) % galleryImages.length;
+      switchChannel(() => {
+        tvContent.innerHTML = views.gallery();
+        bindGalleryEvents();
+      });
     });
-  });
+  }
 
 });
