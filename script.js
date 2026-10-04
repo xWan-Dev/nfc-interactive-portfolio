@@ -1,6 +1,10 @@
+// ==========================================
+//   CONTROLADOR COMPLETO VHS & CRT (80s)
+// ==========================================
+
 document.addEventListener("DOMContentLoaded", () => {
   // --- REPRODUCCIÓN DE FRAGMENTOS DE AUDIO VHS (vhs-sound.mp3) ---
-  const AUDIO_SRC = "vhs-sound.mp3"; // Cambia aquí si tu archivo tiene otro nombre
+  const AUDIO_SRC = "vhs-sound.mp3"; 
 
   // Función genérica para reproducir un rango exacto de segundos del MP3
   function playAudioSegment(startTime, duration) {
@@ -85,15 +89,20 @@ document.addEventListener("DOMContentLoaded", () => {
     "demo3.jpg"
   ];
 
+  // Función de transición de canal sincronizada con tu static.gif y el audio del motor
   function switchChannel(renderCallback) {
-    playTapeMotor(); // Reproduce la estática/arrastre del tramo central
-    if (tvStatic) tvStatic.classList.add("active");
+    playTapeMotor(); // Reproduce el tramo de estática/arrastre del audio (1.5s)
+    
+    if (tvStatic) tvStatic.classList.add("active"); // Muestra tu static.gif animado
+    
+    // Hacemos coincidir el tiempo de cambio con la duración del efecto visual/sonoro
     setTimeout(() => {
-      renderCallback();
+      renderCallback(); // Cambia el contenido interno de la pantalla
+      
       setTimeout(() => {
-        if (tvStatic) tvStatic.classList.remove("active");
-      }, 250);
-    }, 200);
+        if (tvStatic) tvStatic.classList.remove("active"); // Oculta el GIF de estática
+      }, 300);
+    }, 600);
   }
 
   const views = {
@@ -144,6 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", () => {
       playHeavyEject(); // Parte 3: Golpe pesado al presionar/insertar cinta VHS
       const type = button.getAttribute("data-type");
+      
       button.classList.add("ejecting");
       setTimeout(() => button.classList.remove("ejecting"), 300);
 
