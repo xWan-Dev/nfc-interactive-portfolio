@@ -189,7 +189,7 @@ body {
   align-items: center;
 }
 
-/* Capa de Estática CRT */
+/* Capa de Estática CRT (Usando static.gif) */
 .tv-static {
   position: absolute;
   top: 0;
@@ -202,12 +202,11 @@ body {
   opacity: 0;
   pointer-events: none;
   z-index: 10;
-  transition: opacity 0.1s ease;
+  transition: opacity 0.05s ease;
 }
 
 .tv-static.active {
-  opacity: 0.85;
-  animation: tvStaticAnim 0.1s steps(4) infinite;
+  opacity: 1;
 }
 
 /* Líneas Scanlines CRT */
@@ -339,7 +338,7 @@ body {
 
 .gallery-frame {
   width: 100%;
-  height: 65%; /* Restringe el alto dentro del tubo */
+  height: 65%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -351,7 +350,7 @@ body {
 .gallery-display-img {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain; /* Mantiene la proporción de la obra sin deformar ni hacer zoom */
+  object-fit: contain;
 }
 
 .gallery-nav {
@@ -455,23 +454,19 @@ body {
 }
 
 /* ==========================================
-   7. OPTIMIZACIÓN ESPECÍFICAS PARA MÓVIL (MOBILE FIRST)
+   7. OPTIMIZACIÓN ESPECÍFICA PARA MÓVIL (MOBILE FIRST)
    ========================================== */
 @media screen and (max-width: 600px) {
-  
-  /* Ajustar contenedor principal al ancho de pantalla táctil */
   .main-container {
     padding: 8px;
     max-width: 100vw;
   }
 
-  /* Ajustes del marco CRT para smartphones */
   .crt-tv-wrapper {
     width: 100%;
     margin-bottom: 5px;
   }
 
-  /* Textos internos adaptados a pantallas reducidas */
   .neon-title {
     font-size: 1.4rem;
     letter-spacing: 1px;
@@ -498,14 +493,13 @@ body {
     margin-bottom: 6px;
   }
 
-  /* Visor de imágenes ajustado dentro del tubo en móvil */
   .gallery-frame {
     height: 60%;
   }
 
   .tv-btn {
     font-size: 0.45rem;
-    padding: 6px 10px; /* Áreas de toque más grandes para dedos */
+    padding: 6px 10px;
   }
 
   .retro-mail-btn {
@@ -513,7 +507,6 @@ body {
     padding: 8px 12px;
   }
 
-  /* Estantería VHS táctil */
   .vhs-shelf {
     padding: 8px;
     margin-top: 4px;
@@ -521,24 +514,15 @@ body {
 
   .tape-slider {
     gap: 10px;
-    -webkit-overflow-scrolling: touch; /* Desplazamiento fluido en iOS */
+    -webkit-overflow-scrolling: touch;
   }
 
   .vhs-tape-card {
-    flex: 0 0 90px; /* Tamaño de cintas ajustado para móviles */
+    flex: 0 0 90px;
   }
 
   .vhs-sticker-label {
     font-size: 0.5rem;
     padding: 3px 2px;
   }
-}
-
-/* ==========================================
-   8. ANIMACIÓN DE ESTÁTICA CRT
-   ========================================== */
-@keyframes tvStaticAnim {
-  0% { background-position: 0 0; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 50% 100%; }
 }
