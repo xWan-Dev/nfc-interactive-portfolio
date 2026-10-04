@@ -39,12 +39,12 @@
   <main class="main-container">
     <div class="retro-setup">
       
-      <!-- Televisor CRT Real -->
+      <!-- Televisor CRT Real con Panel Interactivo Superpuesto -->
       <div class="crt-tv-wrapper">
         <img src="tv.png" alt="Televisor CRT Retro" class="tv-frame-img">
         
         <div class="tv-screen-area">
-          <!-- Capa de estática -->
+          <!-- Capa de estática (static.gif) -->
           <div id="tv-static" class="tv-static"></div>
           
           <!-- Líneas de escaneo scanlines -->
@@ -55,6 +55,21 @@
             <!-- El JS inyecta las vistas aquí -->
           </div>
         </div>
+
+        <!-- ==========================================
+           PANEL DE BOTONES INTERACTIVOS SOBRE EL PNG
+           ========================================== -->
+        <div class="tv-interactive-panel">
+          <!-- Botones pequeños verticales de la derecha -->
+          <button class="tv-hotspot btn-section-1" data-type="home" title="Canal 1: Inicio"></button>
+          <button class="tv-hotspot btn-section-2" data-type="gallery" title="Canal 2: Obras"></button>
+          <button class="tv-hotspot btn-section-3" data-type="bio" title="Canal 3: Biografía"></button>
+          <button class="tv-hotspot btn-section-4" data-type="contact" title="Canal 4: Contacto"></button>
+
+          <!-- Perilla grande inferior derecha -->
+          <button class="tv-hotspot btn-big-dial" title="Siguiente Obra / Acción"></button>
+        </div>
+
       </div>
 
       <!-- Estantería con Carrusel Horizontal VHS (4 Secciones SPA) -->
