@@ -25,10 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- 2. GALERÍA FLOTANTE EN EL FONDO ---
   const floatingGallery = document.getElementById("floating-gallery");
   const sampleImages = [
-    "artwork1.jpg",
-    "artwork2.jpg",
-    "artwork3.jpg",
-    "chucky-knife.png"
+    "demo1.jpg",
+    "demo2.jpg",
+    "demo3.jpg",
   ];
 
   if (floatingGallery) {
@@ -52,9 +51,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Estado de la galería interna de la TV
   let currentGalleryIndex = 0;
   const galleryImages = [
-    "artwork1.jpg",
-    "artwork2.jpg",
-    "artwork3.jpg"
+    "demo1.jpg",
+    "demo2.jpg",
+    "demo3.jpg"
   ];
 
   // Función para simular cambio de canal con nieve/estática CRT
@@ -85,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         <div class="gallery-frame">
           <img src="${galleryImages[currentGalleryIndex]}" 
-               alt="Obra de Arte" 
+               alt="Artwork" 
                class="gallery-display-img"
                onerror="this.src='chucky-knife.png'">
         </div>
