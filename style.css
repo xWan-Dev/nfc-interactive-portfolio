@@ -1,5 +1,535 @@
 /* ==========================================
-   BOTONERA FÍSICA INTERACTIVA SOBRE LA TELE
+   1. VARIABLES GLOBALES Y FUENTES RETRO 80s
+   ========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Press+Start+2P&family=Share+Tech+Mono&display=swap');
+
+:root {
+  --bg-color: #080808;
+  --text-color: #f0f0f0;
+  --red-accent: #ff1e1e;
+  --red-dark: #700000;
+  --neon-yellow: #ffee00;
+  --neon-cyan: #00f3ff;
+  --card-bg: rgba(18, 18, 18, 0.9);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Share Tech Mono', monospace;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+/* ==========================================
+   2. PANTALLA DE CARGA (INTRO CUCHILLO)
+   ========================================== */
+#intro-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#intro-screen.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.retro-title {
+  color: var(--red-accent);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px var(--red-dark);
+}
+
+.progress-bar-track {
+  position: relative;
+  width: 260px;
+  height: 16px;
+  border: 2px solid var(--red-accent);
+  border-radius: 4px;
+  background-color: #111;
+  box-shadow: 0 0 12px var(--red-dark);
+}
+
+.blood-trail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #600000, #ff0000);
+  transition: width 0.1s linear;
+}
+
+.knife-loader {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-100%, -50%);
+  width: 28px;
+  height: auto;
+  transition: left 0.1s linear;
+  pointer-events: none;
+}
+
+.retro-counter {
+  margin-top: 12px;
+  color: var(--neon-yellow);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+}
+
+/* ==========================================
+   3. GALERÍA FLOTANTE DE FONDO
+   ========================================== */
+.floating-gallery {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.floating-item {
+  position: absolute;
+  width: 80px;
+  height: auto;
+  opacity: 0.12;
+  filter: grayscale(100%) contrast(150%);
+  animation: floatBg linear infinite;
+}
+
+@keyframes floatBg {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  20% { opacity: 0.15; }
+  80% { opacity: 0.15; }
+  100% { transform: translateY(-120px) rotate(20deg); opacity: 0; }
+}
+
+/* ==========================================
+   4. MARCO TELEVISOR CRT Y PANTALLA INTELIGENTE
+   ========================================== */
+.main-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.retro-setup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.crt-tv-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1024 / 725;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tv-frame-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Zona exacta del cristal de la TV */
+.tv-screen-area {
+  position: absolute;
+  top: 12%;
+  left: 8.8%;
+  width: 64.2%;
+  height: 68.5%;
+  background-color: #000;
+  border-radius: 12px / 16px;
+  overflow: hidden;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Capa de Estática CRT */
+.tv-static {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  background-image: url('static.gif');
+  background-size: 100% 100% !important;
+  background-position: center !important;
+  background-repeat: no-repeat;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 0.05s ease;
+}
+
+.tv-static.active {
+  opacity: 1;
+}
+
+/* Líneas Scanlines CRT */
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.4) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Contenido dentro de la TV */
+.screen-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* ==========================================
+   5. VISTAS INTERNAS (ESTÉTICA TERROR 80s)
+   ========================================== */
+.vhs-screen-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.neon-title {
+  font-family: 'Creepster', cursive;
+  font-size: 2rem;
+  color: var(--red-accent);
+  text-shadow: 0 0 10px var(--red-dark), 0 0 20px #000;
+  letter-spacing: 3px;
+  margin-bottom: 4px;
+}
+
+.neon-title-sm {
+  font-family: 'Creepster', cursive;
+  font-size: 1.6rem;
+  color: var(--neon-yellow);
+  text-shadow: 0 0 8px var(--red-dark);
+  margin-bottom: 8px;
+}
+
+.neon-subtitle {
+  color: var(--neon-cyan);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  text-shadow: 0 0 5px var(--neon-cyan);
+}
+
+.vhs-badge {
+  background: #000;
+  color: #00ff00;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.55rem;
+  padding: 3px 6px;
+  border: 1px solid #00ff00;
+  margin-bottom: 10px;
+}
+
+.vhs-prompt {
+  color: var(--neon-yellow);
+  font-size: 0.7rem;
+  max-width: 85%;
+  line-height: 1.3;
+}
+
+.bio-text {
+  color: #e0e0e0;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  max-width: 90%;
+  margin-bottom: 12px;
+}
+
+.retro-mail-btn {
+  display: inline-block;
+  color: var(--neon-cyan);
+  text-decoration: none;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.6rem;
+  border: 1px solid var(--neon-cyan);
+  padding: 6px 10px;
+  margin-top: 10px;
+  transition: all 0.2s ease;
+  background: rgba(0, 243, 255, 0.1);
+}
+
+.retro-mail-btn:hover {
+  background: var(--neon-cyan);
+  color: #000;
+}
+
+/* --- VISOR DE LA GALERÍA --- */
+.tv-gallery-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gallery-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.gallery-frame {
+  width: 100%;
+  height: 65%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid #333;
+  background: #050505;
+}
+
+.gallery-display-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.gallery-nav {
+  display: flex;
+  gap: 10px;
+}
+
+.tv-btn {
+  background: #151515;
+  color: var(--neon-yellow);
+  border: 1px solid var(--red-accent);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.5rem;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.tv-btn:active {
+  background: var(--red-accent);
+  color: #fff;
+}
+
+/* ==========================================
+   6. CARRUSEL DE CINTAS VHS
+   ========================================== */
+.vhs-shelf {
+  width: 100%;
+  margin-top: 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--red-dark);
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
+}
+
+.shelf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  color: var(--neon-yellow);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.55rem;
+}
+
+.shelf-arrow {
+  color: var(--red-accent);
+}
+
+.tape-slider {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 4px;
+}
+
+.tape-slider::-webkit-scrollbar {
+  height: 4px;
+}
+
+.tape-slider::-webkit-scrollbar-thumb {
+  background: var(--red-accent);
+  border-radius: 2px;
+}
+
+.vhs-tape-card {
+  flex: 0 0 100px;
+  scroll-snap-align: start;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.vhs-tape-card.ejecting {
+  transform: translateY(-8px);
+}
+
+.vhs-tape-img {
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+}
+
+.vhs-sticker-label {
+  margin-top: 5px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.55rem;
+  color: #fff;
+  background: #111;
+  padding: 2px 4px;
+  border: 1px solid #333;
+  width: 100%;
+  text-align: center;
+}
+
+/* ==========================================
+   7. OPTIMIZACIÓN MÓVIL
+   ========================================== */
+@media screen and (max-width: 600px) {
+  .main-container {
+    padding: 8px;
+    max-width: 100vw;
+  }
+
+  .crt-tv-wrapper {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .neon-title {
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+  }
+
+  .neon-title-sm {
+    font-size: 1.2rem;
+  }
+
+  .neon-subtitle {
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .vhs-prompt, .bio-text {
+    font-size: 0.6rem;
+    line-height: 1.2;
+  }
+
+  .vhs-badge {
+    font-size: 0.45rem;
+    padding: 2px 4px;
+    margin-bottom: 6px;
+  }
+
+  .gallery-frame {
+    height: 60%;
+  }
+
+  .tv-btn {
+    font-size: 0.45rem;
+    padding: 6px 10px;
+  }
+
+  .retro-mail-btn {
+    font-size: 0.5rem;
+    padding: 8px 12px;
+  }
+
+  .vhs-shelf {
+    padding: 8px;
+    margin-top: 4px;
+  }
+
+  .tape-slider {
+    gap: 10px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .vhs-tape-card {
+    flex: 0 0 90px;
+  }
+
+  .vhs-sticker-label {
+    font-size: 0.5rem;
+    padding: 3px 2px;
+  }
+}
+
+/* ==========================================
+   8. PANEL INTERACTIVO DE LA TELEVISIÓN
    ========================================== */
 .tv-interactive-panel {
   position: absolute;
@@ -14,20 +544,26 @@
 .tv-hotspot {
   position: absolute;
   pointer-events: auto;
-  background: rgba(0, 243, 255, 0.15); /* Déjalo con color temporalmente para verificar que encaja exacto en la perilla */
-  border: 1px dashed rgba(0, 243, 255, 0.8);
+  /* IMPORTANTE: Si quieres que sea totalmente invisible quita las siguientes dos líneas de fondo/borde */
+  background: rgba(0, 243, 255, 0.0); 
+  border: 1px dashed rgba(0, 243, 255, 0.0);
   cursor: pointer;
   border-radius: 50%;
   transition: all 0.2s ease;
 }
 
+/* Efecto visual al pasar el ratón por encima del dial */
 .tv-hotspot:hover {
-  background: rgba(0, 243, 255, 0.3);
+  background: rgba(0, 243, 255, 0.2);
   border: 1px solid var(--neon-cyan);
   box-shadow: 0 0 10px var(--neon-cyan);
 }
 
-/* --- COORDENADA EXACTA DEL DIAL GRANDE EN SU PERILLA SUPERIOR --- */
+.tv-hotspot:active {
+  background: rgba(255, 30, 30, 0.4);
+}
+
+/* --- COORDENADA EXACTA DEL DIAL GRANDE (PERILLA SUPERIOR) --- */
 .btn-big-dial {
   top: 50.5%;
   right: 8.5%;
