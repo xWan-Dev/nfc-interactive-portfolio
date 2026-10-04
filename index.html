@@ -1,3 +1,49 @@
-<h1 class="artist-name">Tu Nombre</h1>
-<p class="artist-bio">Tu biografía aquí...</p>
-<a href="[https://instagram.com/tu_usuario](https://instagram.com/tu_usuario)">Instagram</a>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NFC Artist Canvas</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Fuentes temáticas de Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- 1. Pantalla de Intro (Animación Cuchillo) -->
+  <div id="intro-screen">
+    <div class="knife-container">
+      <div class="knife-slash"></div>
+      <p class="intro-text">ENTRANDO...</p>
+    </div>
+  </div>
+
+  <!-- 2. Galería Flotante de Fondo (Generada dinámicamente por script.js) -->
+  <div id="floating-gallery"></div>
+
+  <!-- 3. Tarjeta Central del Artista -->
+  <main class="main-container">
+    <section class="artist-card">
+      <h1 class="artist-name">Tu Nombre</h1>
+      <p class="artist-tagline">Arte & Ilustración</p>
+      
+      <p class="artist-bio">
+        Tu biografía aquí... Escribe una breve presentación de tu estilo y universo visual.
+      </p>
+
+      <div class="contact-links">
+        <a href="https://instagram.com/tu_usuario" target="_blank" rel="noopener" class="btn btn-instagram">
+          Instagram
+        </a>
+        <a href="mailto:tu_correo@email.com" class="btn btn-email">
+          Enviar Correo
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
