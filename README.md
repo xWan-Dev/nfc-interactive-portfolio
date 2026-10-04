@@ -39,3 +39,27 @@ nfc-artist-canvas/
         ├── obra1.webp
         ├── obra2.webp
         └── obra3.webp
+
+🚀 Guía de Uso para el Artista
+1. Personalización de Datos
+Edita los datos del artista dentro del archivo index.html:
+
+<h1 class="artist-name">Tu Nombre</h1>
+<p class="artist-bio">Tu biografía aquí...</p>
+<a href="[https://instagram.com/tu_usuario](https://instagram.com/tu_usuario)">Instagram</a>
+
+2. Carga de Obras
+Coloca tus imágenes en la carpeta /assets/galeria/. Se recomienda el formato .webp o .png optimizado para minimizar el consumo de datos móviles al escanear la tarjeta.
+
+3. Publicación y Grabado NFC
+Haz Push de los cambios a la rama main de este repositorio.
+
+- Ve a Settings > Pages en GitHub y activa el despliegue desde la rama main.
+
+- Copia la URL generada (https://<tu-usuario>.github.io/nfc-artist-canvas/).
+
+- Usa una aplicación de grabado NFC (como NFC Tools) para escribir la URL en el chip de tu tarjeta.
+
+📜 Licencia y Privacidad
+Este proyecto es de código abierto. Garantiza la protección de los derechos de autor al no conectarse a ninguna plataforma externa que recopile datos de imágenes.
+
