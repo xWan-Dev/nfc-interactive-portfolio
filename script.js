@@ -1,5 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
   // ==========================================
+  // 0. PRECARGA DE IMÁGENES CRÍTICAS
+  // ==========================================
+  const criticalImages = [
+    'tv.png', 
+    'vhs.png', 
+    'chucky-knife.png', 
+    'demo1.jpg', 
+    'demo2.jpg', 
+    'demo3.jpg'
+  ];
+
+  criticalImages.forEach(src => {
+    const img = new Image();
+    img.src = src;
+  });
+
+  // ==========================================
   // 1. SIMULACIÓN DE CARGA RETRO 80s (Barra de sangre y cuchillo)
   // ==========================================
   const introScreen = document.getElementById("intro-screen");
