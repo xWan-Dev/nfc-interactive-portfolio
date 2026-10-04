@@ -194,30 +194,40 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- INTERACTIVIDAD DE LA BOTONERA FÍSICA DE LA TELEVISIÓN ---
-document.querySelectorAll(".tv-interactive-panel .tv-hotspot").forEach(hotspot => {
-  hotspot.addEventListener("click", () => {
-    playQuickClick(); // Sonido de clic metálico corto de la botonera
+  document.querySelectorAll(".tv-interactive-panel .tv-hotspot").forEach(hotspot => {
+    hotspot.addEventListener("click", () => {
+      
+      // 1. Si se pulsa uno de los 4 botones pequeños (cambio de sección)
+      const targetType = hotspot.getAttribute("data-type");
+      if (targetType && views[targetType]) {
+        playHeavyEject(); // Efecto de cambio de cinta/canal
+        switchChannel(() => {
+          tvContent.innerHTML = views[targetType]();
+          if (targetType === "gallery") bindGalleryEvents();
+        });
+        return;
+      }
 
-    // Si el botón es un selector de sección (botones pequeños)
-    const targetType = hotspot.getAttribute("data-type");
-    if (targetType && views[targetType]) {
-      playHeavyEject(); // Efecto de cambio de canal
-      switchChannel(() => {
-        tvContent.innerHTML = views[targetType]();
-        if (targetType === "gallery") bindGalleryEvents();
-      });
-      return;
-    }
+      // 2. Si se pulsa EL DIAL GRANDE (marcado en rojo)
+      if (hotspot.classList.contains("btn-big-dial")) {
+        // Comprobamos estrictamente si el contenedor de la galería está activo en pantalla
+        const isGalleryActive = document.querySelector(".tv-gallery-container") !== null;
 
-    // Si el botón es la perilla grande inferior (actúa como "Siguiente" o avanza la galería)
-    if (hotspot.classList.contains("btn-big-dial")) {
-      currentGalleryIndex = (currentGalleryIndex + 1) % galleryImages.length;
-      switchChannel(() => {
-        tvContent.innerHTML = views.gallery();
-        bindGalleryEvents();
-      });
-    }
+        // Si NO estamos en la galería, el dial no hace nada
+        if (!isGalleryActive) {
+          playQuickClick();
+          return;
+        }
+
+        // Si SÍ estamos en la galería, avanza la foto de forma sincronizada
+        playQuickClick();
+        currentGalleryIndex = (currentGalleryIndex + 1) % galleryImages.length;
+        switchChannel(() => {
+          tvContent.innerHTML = views.gallery();
+          bindGalleryEvents();
+        });
+      }
+    });
   });
-});
-});
 
+});
