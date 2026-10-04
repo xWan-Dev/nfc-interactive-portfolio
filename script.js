@@ -96,54 +96,58 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ==========================================
-  // 3. LÓGICA INTERACTIVA VHS Y TELEVISOR
+// ==========================================
+  // 3. LÓGICA DE NAVEGACIÓN SPA EN LA TV
   // ==========================================
   const tapes = document.querySelectorAll(".vhs-tape-card");
   const tvContent = document.getElementById("tv-content");
   const tvStatic = document.getElementById("tv-static");
 
+  // Plantillas HTML para cada sección de la TV
+  const pages = {
+    home: `
+      <h1 class="artist-name">Tu Nombre</h1>
+      <p class="artist-tagline">Arte & Ilustración 80s</p>
+      <p class="artist-bio">Selecciona o desliza una cinta para reproducir contenido.</p>
+    `,
+    gallery: `
+      <h2 style="color:#00ffff; font-size:0.95rem; margin-bottom: 4px;">GALERÍA DE OBRAS</h2>
+      <p style="font-size:0.58rem; color:#a2c4c9; margin-bottom: 6px;">PORTAFOLIO VISUAL</p>
+      <a href="https://instagram.com/tu_usuario" target="_blank" rel="noopener">▶ VER EN INSTAGRAM</a>
+    `,
+    bio: `
+      <h2 style="color:#ffff00; font-size:0.95rem; margin-bottom: 4px;">BIOGRAFÍA</h2>
+      <p style="font-size:0.58rem; line-height:1.25; color:#e8d595;">
+        Ilustración & Arte visual inspirado en el cine de terror de los 80s, slashers y estética VHS.
+      </p>
+    `,
+    contact: `
+      <h2 style="color:#ff0055; font-size:0.95rem; margin-bottom: 4px;">CONTACTO</h2>
+      <p style="font-size:0.58rem; color:#a2c4c9; margin-bottom: 6px;">COMISIONES Y DUDAS</p>
+      <a href="mailto:tu_correo@email.com">▶ ENVIAR MAIL</a>
+    `
+  };
+
   tapes.forEach((tape) => {
     tape.addEventListener("click", () => {
       const type = tape.getAttribute("data-type");
-      const url = tape.getAttribute("data-url");
 
-      // Animación de expulsión ligera de la cinta seleccionada
+      // Animación ligera de empuje/expulsión
       tape.classList.add("ejecting");
 
-      // Activa ráfaga de estática e interferencia CRT
+      // Dispara la estática CRT
       if (tvStatic) tvStatic.classList.add("active");
 
       setTimeout(() => {
         tape.classList.remove("ejecting");
       }, 300);
 
-      // Cambia el contenido dentro del tubo de la tele mientras dura la estática
+      // Inyecta la vista correspondiente durante la estática
       setTimeout(() => {
-        if (type === "instagram") {
-          tvContent.innerHTML = `
-            <h2 style="color:#ff0055; font-size:1rem; margin-bottom: 2px;">INSTAGRAM</h2>
-            <p style="font-size: 0.58rem; color: #a2c4c9; margin-bottom:4px;">PORTAFOLIO VISUAL</p>
-            <a href="${url}" target="_blank" rel="noopener">▶ VER PERFIL</a>
-          `;
-        } else if (type === "email") {
-          tvContent.innerHTML = `
-            <h2 style="color:#00ffff; font-size:1rem; margin-bottom: 2px;">CONTACTO</h2>
-            <p style="font-size: 0.58rem; color: #a2c4c9; margin-bottom:4px;">COMISIONES & DUDAS</p>
-            <a href="${url}">▶ ENVIAR MAIL</a>
-          `;
-        } else if (type === "bio") {
-          tvContent.innerHTML = `
-            <h2 style="color:#ffff00; font-size:1rem; margin-bottom: 2px;">BIOGRAFÍA</h2>
-            <p style="font-size:0.58rem; line-height:1.2; color:#e8d595;">
-              Ilustración & Arte visual inspirado en el cine de terror de los 80s y estética VHS.
-            </p>
-          `;
+        if (pages[type]) {
+          tvContent.innerHTML = pages[type];
         }
-
-        // Retira la estática revelando el nuevo contenido
         if (tvStatic) tvStatic.classList.remove("active");
       }, 450);
     });
   });
-});
