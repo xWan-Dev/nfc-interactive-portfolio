@@ -43,18 +43,18 @@
       <div class="crt-tv-wrapper">
         <img src="tv.png" alt="Televisor CRT Retro" class="tv-frame-img">
         
-        <div class="tv-screen-area">
-          <div class="screen-content" id="tv-content">
-            <h1 class="artist-name">Tu Nombre</h1>
-            <p class="artist-tagline">Arte & Ilustración</p>
-            <p class="artist-bio">
-              Desliza y selecciona una cinta VHS...
-            </p>
-          </div>
-          <div class="scanlines"></div>
-          <div class="tv-static" id="tv-static"></div>
-        </div>
-      </div>
+<div class="tv-screen-area">
+  <!-- Capa de estática -->
+  <div id="tv-static" class="tv-static"></div>
+  
+  <!-- Líneas de escaneo scanlines -->
+  <div class="scanlines"></div>
+  
+  <!-- Contenido dinámico (Texto / Galería) -->
+  <div id="tv-content" class="screen-content">
+    <!-- El JS inyecta las vistas aquí -->
+  </div>
+</div>
 
       <!-- Estantería con Carrusel Horizontal VHS (4 Secciones SPA) -->
       <div class="vhs-shelf">
