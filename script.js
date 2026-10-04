@@ -28,8 +28,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   simulateRetroLoading();
 
-  // --- 2. GALERÍA FLOTANTE (Vacía por ahora) ---
-  const imagenesObras = []; // Subiremos las obras más adelante
+  // --- 2. GALERÍA FLOTANTE DE PRUEBA ---
+  // Cambia estos nombres si tus imágenes de prueba se llaman distinto
+  const imagenesObras = [
+    "demo1.jpg",
+    "demo2.jpg",
+    "demo3.jpg"
+  ];
 
   const galleryContainer = document.getElementById("floating-gallery");
 
@@ -39,10 +44,13 @@ document.addEventListener("DOMContentLoaded", () => {
       img.src = imgSrc;
       img.classList.add("floating-item");
 
-      const topPos = Math.floor(Math.random() * 70) + 10;
-      const leftPos = Math.floor(Math.random() * 70) + 10;
-      const duration = Math.floor(Math.random() * 6) + 8;
-      const delay = index * 2.5;
+      // Posiciones aleatorias distribuidas por la pantalla
+      const topPos = Math.floor(Math.random() * 65) + 10;
+      const leftPos = Math.floor(Math.random() * 65) + 10;
+      
+      // Duración y tiempos escalonados para que floten en bucle sin sincronizarse
+      const duration = Math.floor(Math.random() * 4) + 7; // Entre 7s y 10s
+      const delay = index * 2; // Desfase entre imágenes
 
       img.style.top = `${topPos}%`;
       img.style.left = `${leftPos}%`;
