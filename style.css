@@ -90,16 +90,18 @@ body {
   border-radius: 2px 0 0 2px;
 }
 
-/* Icono del Cuchillo avanzando en horizontal (sin rotación) */
+/* Icono del Cuchillo avanzando en horizontal */
 .knife-loader {
   position: absolute;
-  top: -30px; /* Ajusta la altura para que la hoja/mango encaje sobre la barra */
+  top: -22px; /* Ajusta la posición vertical respecto a la barra */
   left: 0%;
-  height: 70px; /* Ancho/alto del cuchillo */
+  height: 65px; /* Altura del archivo vertical */
   width: auto;
   display: block;
-  transform: translateX(-50%); /* Solo centra la punta sobre la barra de sangre */
-  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.9));
+  /* Rotamos 90 grados y lo desplazamos para que el avance coincida con la punta/cuerpo */
+  transform: translateX(-50%) rotate(90deg);
+  transform-origin: center center;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.9));
   pointer-events: none;
   z-index: 2;
   transition: left 0.1s linear;
