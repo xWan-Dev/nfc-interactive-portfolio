@@ -39,13 +39,12 @@
     <div class="crt-tv-wrapper">
       <img src="tv.png" alt="Televisor CRT Retro" class="tv-frame-img">
       
-      <!-- Pantalla donde se proyecta el texto/enlaces -->
       <div class="tv-screen-area">
         <div class="screen-content" id="tv-content">
           <h1 class="artist-name">Tu Nombre</h1>
           <p class="artist-tagline">Arte & Ilustración</p>
           <p class="artist-bio">
-            Selecciona una cinta VHS para reproducir en la pantalla...
+            Desliza y selecciona una cinta VHS...
           </p>
         </div>
         <div class="scanlines"></div>
@@ -53,11 +52,15 @@
       </div>
     </div>
 
-    <!-- Estantería con Cintas VHS Reales -->
+    <!-- Estantería con Carrusel Horizontal VHS -->
     <div class="vhs-shelf">
-      <p class="shelf-title">-- CINTAS DISPONIBLES --</p>
+      <div class="shelf-header">
+        <span class="shelf-arrow">◀</span>
+        <p class="shelf-title">-- DESLIZA LAS CINTAS --</p>
+        <span class="shelf-arrow">▶</span>
+      </div>
       
-      <div class="tape-list">
+      <div class="tape-slider" id="tape-slider">
         <!-- Cinta 1: Instagram -->
         <button class="vhs-tape-card" data-type="instagram" data-url="https://instagram.com/tu_usuario">
           <img src="vhs.png" alt="Cinta VHS Instagram" class="vhs-tape-img">
