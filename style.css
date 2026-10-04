@@ -1,17 +1,22 @@
 /* ==========================================
-   PALETA DE COLORES Y VARIABLES
+   PALETA DE COLORES Y VARIABLES (Estética Chucky / Slasher 80s)
    ========================================== */
 :root {
-  --bg-color: #0c0b0e;
-  --red-accent: #d61a1a;
-  --red-dark: #660000;
-  --pastel-blue: #a2c4c9;
-  --pastel-yellow: #e8d595;
-  --pastel-pink: #f28b82;
-  --text-color: #f0f0f0;
+  --bg-color: #0c0b0e;             /* Negro carbón profundo */
+  --card-bg: rgba(20, 18, 24, 0.88); /* Fondo semi-transparente */
+  --red-accent: #d61a1a;          /* Rojo sangre neón */
+  --red-dark: #660000;            /* Rojo oscuro / sombras */
+  
+  /* Tonos pastel icónicos */
+  --pastel-blue: #a2c4c9;         /* Azul pastel tenue */
+  --pastel-yellow: #e8d595;       /* Amarillo pastel apagado */
+  --pastel-pink: #f28b82;         /* Rosa / rojo pastel */
+  --text-color: #f0f0f0;          /* Blanco roto */
 }
 
-/* RESET GENERAL Y SCROLL HABILITADO EN MÓVIL */
+/* ==========================================
+   ESTILOS GENERALES Y RESET
+   ========================================== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -25,15 +30,19 @@ body {
   min-height: 100vh;
   width: 100vw;
   overflow-x: hidden;
-  overflow-y: auto; /* Permite scroll si la pantalla es pequeña */
+  overflow-y: auto; /* Permite scroll vertical en móviles pequeños si es necesario */
   position: relative;
 }
 
-/* 1. PANTALLA DE INTRO RETRO 80s */
+/* ==========================================
+   1. PANTALLA DE INTRO RETRO 80s (Cuchillo y Sangre)
+   ========================================== */
 #intro-screen {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-color: #050505;
   z-index: 9999;
   display: flex;
@@ -60,7 +69,8 @@ body {
 
 .progress-bar-track {
   position: relative;
-  width: 100%; height: 22px;
+  width: 100%;
+  height: 22px;
   background-color: #1a1a1a;
   border: 2px solid var(--red-dark);
   border-radius: 4px;
@@ -68,15 +78,19 @@ body {
 
 .blood-trail {
   position: absolute;
-  top: 0; left: 0;
-  height: 100%; width: 0%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
   background: linear-gradient(90deg, #660000, var(--red-accent));
 }
 
 .knife-loader {
   position: absolute;
-  top: -20px; left: 0%;
-  height: 60px; width: auto;
+  top: -20px;
+  left: 0%;
+  height: 60px;
+  width: auto;
   transform: translateX(-50%) rotate(90deg);
   transform-origin: center center;
   pointer-events: none;
@@ -96,11 +110,15 @@ body {
   visibility: hidden;
 }
 
-/* 2. GALERÍA FLOTANTE */
+/* ==========================================
+   2. GALERÍA FLOTANTE (Fondo)
+   ========================================== */
 #floating-gallery {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 1;
 }
@@ -125,7 +143,9 @@ body {
   100% { opacity: 0; transform: translateY(-30px) scale(0.9); }
 }
 
-/* 3. ESTRUCTURA PRINCIPAL (CORREGIDA PARA QUE NO SE CORTE) */
+/* ==========================================
+   3. CONTENEDOR PRINCIPAL
+   ========================================== */
 .main-container {
   display: flex;
   justify-content: center;
@@ -142,10 +162,12 @@ body {
   align-items: center;
   gap: 12px;
   width: 100%;
-  max-width: 360px; /* Tamaño optimizado para pantallas móviles */
+  max-width: 360px;
 }
 
-/* TELEVISOR REAL Y PANTALLA ENCAJADA */
+/* ==========================================
+   4. TELEVISOR CRT REAL Y ÁREA DE PANTALLA
+   ========================================== */
 .crt-tv-wrapper {
   position: relative;
   width: 100%;
@@ -160,35 +182,37 @@ body {
   display: block;
   z-index: 3;
   pointer-events: none;
-  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.9));
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.95));
 }
 
+/* Cristal interior donde se proyecta la información */
 .tv-screen-area {
   position: absolute;
-  top: 9%;
-  left: 6.5%;
-  width: 66%;
-  height: 77%;
+  top: 10%;
+  left: 7.5%;
+  width: 63%;
+  height: 74%;
   background-color: #050505;
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 10px;
 }
 
 .screen-content {
   text-align: center;
   font-family: 'Courier New', Courier, monospace;
-  padding: 8px;
-  z-index: 2;
   width: 100%;
+  z-index: 2;
+  word-wrap: break-word;
 }
 
 .screen-content .artist-name {
   font-family: 'Creepster', cursive;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: var(--pastel-pink);
   text-shadow: 2px 2px 0px var(--red-dark);
   margin-bottom: 2px;
@@ -196,14 +220,14 @@ body {
 
 .screen-content .artist-tagline {
   color: var(--pastel-blue);
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   letter-spacing: 1px;
   margin-bottom: 6px;
 }
 
 .screen-content .artist-bio {
-  font-size: 0.7rem;
-  line-height: 1.2;
+  font-size: 0.65rem;
+  line-height: 1.25;
   color: var(--pastel-yellow);
 }
 
@@ -214,13 +238,13 @@ body {
   padding: 5px 10px;
   border-radius: 3px;
   font-weight: bold;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   text-decoration: none;
   margin-top: 6px;
   box-shadow: 0 0 8px var(--red-accent);
 }
 
-/* EFECTOS DE PANTALLA CRT & RÁFAGA DE ESTÁTICA */
+/* Efectos CRT: Líneas de escaneo y Estática */
 .scanlines {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
@@ -241,7 +265,7 @@ body {
 }
 
 .tv-static.active {
-  opacity: 0.85; /* Ráfaga de ruido blanca/negra intensa al cambiar de cinta */
+  opacity: 0.85;
   animation: staticNoise 0.08s infinite;
 }
 
@@ -251,44 +275,78 @@ body {
   100% { transform: translate(3px, -2px); }
 }
 
-/* ESTANTERÍA Y CINTAS VHS */
+/* ==========================================
+   5. ESTANTERÍA Y CARRUSEL HORIZONTAL VHS
+   ========================================== */
 .vhs-shelf {
   width: 100%;
   background: linear-gradient(180deg, #2d1a0e 0%, #1a0f08 100%);
   border: 2px solid #3d2414;
   border-bottom: 6px solid #120a05;
-  padding: 10px 8px;
+  padding: 8px;
   border-radius: 6px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.9);
 }
 
+.shelf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  padding: 0 4px;
+}
+
 .shelf-title {
   color: var(--pastel-yellow);
-  font-size: 0.7rem;
-  text-align: center;
-  margin-bottom: 8px;
+  font-size: 0.65rem;
   font-family: 'Courier New', Courier, monospace;
   letter-spacing: 1px;
 }
 
-.tape-list {
+.shelf-arrow {
+  color: var(--red-accent);
+  font-size: 0.75rem;
+  animation: pulse 1.2s infinite alternate;
+}
+
+@keyframes pulse {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}
+
+/* Contenedor deslizante por touch (Swipe) */
+.tape-slider {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tape-slider::-webkit-scrollbar {
+  height: 4px;
+}
+
+.tape-slider::-webkit-scrollbar-thumb {
+  background: var(--red-dark);
+  border-radius: 2px;
 }
 
 .vhs-tape-card {
+  flex: 0 0 85%; /* Deja asomar la siguiente cinta */
+  scroll-snap-align: center;
   position: relative;
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
-  width: 100%;
   transition: transform 0.2s ease;
 }
 
-.vhs-tape-card:active, .vhs-tape-card:hover {
-  transform: scale(0.98);
+.vhs-tape-card:active {
+  transform: scale(0.96);
 }
 
 .vhs-tape-img {
@@ -318,6 +376,6 @@ body {
 }
 
 .vhs-tape-card.ejecting {
-  transform: translateY(-10px) scale(0.92);
-  opacity: 0.4;
+  transform: translateY(-8px) scale(0.92);
+  opacity: 0.5;
 }
