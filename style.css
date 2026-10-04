@@ -202,10 +202,12 @@ body {
   opacity: 0;
   pointer-events: none;
   z-index: 10;
+  transition: opacity 0.1s ease;
 }
 
 .tv-static.active {
   opacity: 0.85;
+  animation: tvStaticAnim 0.1s steps(4) infinite;
 }
 
 /* Líneas Scanlines CRT */
@@ -530,4 +532,13 @@ body {
     font-size: 0.5rem;
     padding: 3px 2px;
   }
+}
+
+/* ==========================================
+   8. ANIMACIÓN DE ESTÁTICA CRT
+   ========================================== */
+@keyframes tvStaticAnim {
+  0% { background-position: 0 0; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 50% 100%; }
 }
