@@ -1,56 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // --- SINTETIZADOR DE EFECTOS DE SONIDO RETRO (WEB AUDIO API) ---
-  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  // --- REPRODUCCIÓN DE FRAGMENTOS DE AUDIO VHS (vhs-sound.mp3) ---
+  const AUDIO_SRC = "vhs-sound.mp3"; // Cambia aquí si tu archivo tiene otro nombre
 
-  // Reproduce un clic mecánico de botón / cinta VHS
-  function playClickSound() {
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(120, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime + 0.08);
-    
-    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
-    
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.08);
+  // Función genérica para reproducir un rango exacto de segundos del MP3
+  function playAudioSegment(startTime, duration) {
+    const audio = new Audio(AUDIO_SRC);
+    audio.currentTime = startTime;
+    audio.play().catch(err => console.log("Permiso de audio requerido en móvil:", err));
+
+    setTimeout(() => {
+      audio.pause();
+    }, duration * 1000);
   }
 
-  // Reproduce un chispazo de estática / cambio de canal CRT
-  function playStaticSound() {
-    if (audioCtx.state === 'suspended') audioCtx.resume();
+  // 1. Clic rápido (Parte 1: de 0.0s a 0.8s) -> Para botones pequeños / galería
+  function playQuickClick() {
+    playAudioSegment(0.0, 0.8);
+  }
 
-    const bufferSize = audioCtx.sampleRate * 0.25; // 0.25 segundos de sonido
-    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-    const output = buffer.getChannelData(0);
+  // 2. Ruido de arrastre/estática (Parte 2: de 1.0s a 2.5s) -> Para el cambio de canal
+  function playTapeMotor() {
+    playAudioSegment(1.0, 1.5);
+  }
 
-    for (let i = 0; i < bufferSize; i++) {
-      output[i] = Math.random() * 2 - 1; // Ruido blanco
-    }
-
-    const whiteNoise = audioCtx.createBufferSource();
-    whiteNoise.buffer = buffer;
-
-    const filter = audioCtx.createBiquadFilter();
-    filter.type = 'bandpass';
-    filter.frequency.value = 1000;
-
-    const gain = audioCtx.createGain();
-    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
-
-    whiteNoise.connect(filter);
-    filter.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    whiteNoise.start();
+  // 3. Golpe pesado de cassette (Parte 3: de 4.8s a 6.8s) -> Para seleccionar cinta VHS
+  function playHeavyEject() {
+    playAudioSegment(4.8, 1.8);
   }
 
   // --- 1. PANTALLA DE CARGA CON CUCHILLO ---
@@ -111,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   function switchChannel(renderCallback) {
-    playStaticSound(); // Sonido de estática CRT
+    playTapeMotor(); // Reproduce la estática/arrastre del tramo central
     if (tvStatic) tvStatic.classList.add("active");
     setTimeout(() => {
       renderCallback();
@@ -167,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   tapeButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      playClickSound(); // Clic de inserción VHS
+      playHeavyEject(); // Parte 3: Golpe pesado al presionar/insertar cinta VHS
       const type = button.getAttribute("data-type");
       button.classList.add("ejecting");
       setTimeout(() => button.classList.remove("ejecting"), 300);
@@ -187,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (prevBtn) {
       prevBtn.addEventListener("click", () => {
-        playClickSound(); // Clic cambio de obra
+        playQuickClick(); // Parte 1: Clic metálico corto al cambiar foto
         currentGalleryIndex = (currentGalleryIndex - 1 + galleryImages.length) % galleryImages.length;
         switchChannel(() => {
           tvContent.innerHTML = views.gallery();
@@ -198,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (nextBtn) {
       nextBtn.addEventListener("click", () => {
-        playClickSound(); // Clic cambio de obra
+        playQuickClick(); // Parte 1: Clic metálico corto al cambiar foto
         currentGalleryIndex = (currentGalleryIndex + 1) % galleryImages.length;
         switchChannel(() => {
           tvContent.innerHTML = views.gallery();
