@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // --- 1. SIMULACIÓN DE CARGA RETRO 80s ---
+  // ==========================================
+  // 1. SIMULACIÓN DE CARGA RETRO 80s (Barra de sangre y cuchillo)
+  // ==========================================
   const introScreen = document.getElementById("intro-screen");
   const bloodTrail = document.getElementById("blood-trail");
   const knifeLoader = document.getElementById("knife-loader");
@@ -27,7 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   simulateRetroLoading();
 
-  // --- 2. GALERÍA FLOTANTE ---
+  // ==========================================
+  // 2. GALERÍA FLOTANTE EN EL FONDO
+  // ==========================================
   const imagenesObras = ["demo1.jpg", "demo2.jpg", "demo3.jpg"];
   const galleryContainer = document.getElementById("floating-gallery");
   const COPIAS_POR_IMAGEN = 4;
@@ -57,7 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // --- 3. LÓGICA INTERACTIVA VHS Y TELEVISOR ---
+  // ==========================================
+  // 3. LÓGICA INTERACTIVA VHS Y TELEVISOR
+  // ==========================================
   const tapes = document.querySelectorAll(".vhs-tape-card");
   const tvContent = document.getElementById("tv-content");
   const tvStatic = document.getElementById("tv-static");
@@ -67,42 +73,42 @@ document.addEventListener("DOMContentLoaded", () => {
       const type = tape.getAttribute("data-type");
       const url = tape.getAttribute("data-url");
 
-      // Animación de expulsar/meter cinta
+      // Animación de expulsión ligera de la cinta seleccionada
       tape.classList.add("ejecting");
-      
-      // Activa ráfaga de estática e interferencia
+
+      // Activa ráfaga de estática e interferencia CRT
       if (tvStatic) tvStatic.classList.add("active");
 
       setTimeout(() => {
         tape.classList.remove("ejecting");
       }, 300);
 
-      // Cambia el contenido dentro de la pantalla durante la estática
+      // Cambia el contenido dentro del tubo de la tele mientras dura la estática
       setTimeout(() => {
         if (type === "instagram") {
           tvContent.innerHTML = `
-            <h2 style="color:#ff0055; font-size:1.1rem; margin-bottom: 4px;">INSTAGRAM</h2>
-            <p style="font-size: 0.65rem; color: #a2c4c9; margin-bottom:6px;">PORTAFOLIO VISUAL</p>
+            <h2 style="color:#ff0055; font-size:1rem; margin-bottom: 2px;">INSTAGRAM</h2>
+            <p style="font-size: 0.58rem; color: #a2c4c9; margin-bottom:4px;">PORTAFOLIO VISUAL</p>
             <a href="${url}" target="_blank" rel="noopener">▶ VER PERFIL</a>
           `;
         } else if (type === "email") {
           tvContent.innerHTML = `
-            <h2 style="color:#00ffff; font-size:1.1rem; margin-bottom: 4px;">CONTACTO</h2>
-            <p style="font-size: 0.65rem; color: #a2c4c9; margin-bottom:6px;">COMISIONES & DUDAS</p>
+            <h2 style="color:#00ffff; font-size:1rem; margin-bottom: 2px;">CONTACTO</h2>
+            <p style="font-size: 0.58rem; color: #a2c4c9; margin-bottom:4px;">COMISIONES & DUDAS</p>
             <a href="${url}">▶ ENVIAR MAIL</a>
           `;
         } else if (type === "bio") {
           tvContent.innerHTML = `
-            <h2 style="color:#ffff00; font-size:1.1rem; margin-bottom: 4px;">BIOGRAFÍA</h2>
-            <p style="font-size:0.65rem; line-height:1.2; color:#e8d595;">
+            <h2 style="color:#ffff00; font-size:1rem; margin-bottom: 2px;">BIOGRAFÍA</h2>
+            <p style="font-size:0.58rem; line-height:1.2; color:#e8d595;">
               Ilustración & Arte visual inspirado en el cine de terror de los 80s y estética VHS.
             </p>
           `;
         }
 
-        // Quita la estática revelando el nuevo contenido
+        // Retira la estática revelando el nuevo contenido
         if (tvStatic) tvStatic.classList.remove("active");
-      }, 500);
+      }, 450);
     });
   });
 });
