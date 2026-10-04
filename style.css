@@ -25,44 +25,12 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   overflow-x: hidden;
 }
 
 /* ==========================================
-   2. BOTÓN DE AUDIO RETRO (MUTE/UNMUTE)
-   ========================================== */
-.sound-btn {
-  position: fixed;
-  top: 15px;
-  right: 15px;
-  z-index: 10000;
-  background: var(--card-bg);
-  border: 1px solid var(--red-accent);
-  color: var(--text-color);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 10px rgba(214, 26, 26, 0.5);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.sound-btn:active {
-  transform: scale(0.9);
-}
-
-.sound-btn.active-sound {
-  box-shadow: 0 0 12px var(--red-accent);
-  border-color: #00ffff;
-}
-
-/* ==========================================
-   3. PANTALLA DE CARGA (INTRO CUCHILLO)
+   2. PANTALLA DE CARGA (INTRO CUCHILLO)
    ========================================== */
 #intro-screen {
   position: fixed;
@@ -84,7 +52,7 @@ body {
   visibility: hidden;
 }
 
-.loading-title {
+.retro-title {
   color: var(--red-accent);
   font-size: 1.2rem;
   letter-spacing: 2px;
@@ -92,7 +60,7 @@ body {
   text-shadow: 0 0 8px var(--red-dark);
 }
 
-.loader-bar-container {
+.progress-bar-track {
   position: relative;
   width: 280px;
   height: 18px;
@@ -123,14 +91,15 @@ body {
   pointer-events: none;
 }
 
-.load-percentage {
+.retro-counter {
   margin-top: 10px;
   color: var(--yellow-glow);
   font-size: 0.9rem;
+  text-align: center;
 }
 
 /* ==========================================
-   4. GALERÍA FLOTANTE EN EL FONDO
+   3. GALERÍA FLOTANTE EN EL FONDO
    ========================================== */
 .floating-gallery {
   position: fixed;
@@ -160,20 +129,27 @@ body {
 }
 
 /* ==========================================
-   5. MARCO TELEVISOR RETRO CRT (AJUSTADO)
+   4. MARCO TELEVISOR RETRO CRT (ENCUADRE FIJO)
    ========================================== */
-.main-wrapper {
+.main-container {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 480px;
+  max-width: 550px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 10px;
+  padding: 10px;
 }
 
-.tv-container {
+.retro-setup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.crt-tv-wrapper {
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
@@ -193,15 +169,15 @@ body {
   pointer-events: none;
 }
 
-/* Ajuste milimétrico del cristal dentro de la carcasa */
-.tv-screen {
+/* Zona interna del tubo del cristal (Coordenadas ajustadas) */
+.tv-screen-area {
   position: absolute;
-  top: 8.5%;
-  left: 6.5%;
-  width: 61.5%;
+  top: 7.2%;
+  left: 7.5%;
+  width: 58%;
   height: 80.5%;
-  background-color: #050505;
-  border-radius: 18px;
+  background-color: #000;
+  border-radius: 20px / 15px; /* Curvatura tipo tubo de imagen */
   overflow: hidden;
   z-index: 2;
   display: flex;
@@ -210,7 +186,7 @@ body {
   align-items: center;
 }
 
-/* Capa de Estática CRT (cubre el 100% sin fisuras) */
+/* Capa de Estática CRT */
 .tv-static {
   position: absolute;
   top: 0;
@@ -224,15 +200,30 @@ body {
   opacity: 0;
   pointer-events: none;
   z-index: 10;
-  border-radius: inherit;
 }
 
 .tv-static.active {
   opacity: 1;
 }
 
+/* Líneas de escaneo CRT */
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 4;
+  pointer-events: none;
+}
+
 /* Contenido dentro de la pantalla */
-.tv-content {
+.screen-content {
   position: relative;
   z-index: 3;
   width: 100%;
@@ -241,32 +232,32 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 12px;
+  padding: 15px;
   box-sizing: border-box;
   text-align: center;
 }
 
 .artist-name {
   color: var(--red-accent);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   letter-spacing: 2px;
   text-shadow: 0 0 6px var(--red-dark);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .artist-tagline {
   color: var(--pastel-blue);
-  font-size: 0.65rem;
-  margin-bottom: 8px;
+  font-size: 0.7rem;
+  margin-bottom: 10px;
 }
 
 .artist-bio {
   color: var(--yellow-glow);
-  font-size: 0.58rem;
+  font-size: 0.65rem;
   line-height: 1.3;
 }
 
-/* Visor de Galería en la TV */
+/* Estilos de la Galería cuando se carga en la TV */
 .tv-gallery-viewer {
   display: flex;
   flex-direction: column;
@@ -277,7 +268,7 @@ body {
 }
 
 .gallery-title {
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   color: var(--pastel-blue);
   letter-spacing: 1px;
   margin-bottom: 4px;
@@ -285,7 +276,7 @@ body {
 
 .gallery-img-frame {
   width: 100%;
-  height: 90px;
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -312,7 +303,7 @@ body {
   color: #fff;
   border: 1px solid var(--red-accent);
   font-family: 'Courier New', Courier, monospace;
-  font-size: 0.52rem;
+  font-size: 0.55rem;
   font-weight: bold;
   padding: 3px 8px;
   border-radius: 3px;
@@ -324,15 +315,15 @@ body {
 }
 
 /* ==========================================
-   6. CARRUSEL Y ESTANTERÍA VHS
+   5. CARRUSEL Y ESTANTERÍA VHS
    ========================================== */
 .vhs-shelf {
   width: 100%;
-  margin-top: 15px;
+  margin-top: 10px;
   background: var(--card-bg);
   border: 1px solid var(--red-dark);
   border-radius: 8px;
-  padding: 10px;
+  padding: 12px;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
 }
 
@@ -340,9 +331,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   color: var(--yellow-glow);
-  font-size: 0.65rem;
+  font-size: 0.7rem;
+}
+
+.shelf-arrow {
+  color: var(--red-accent);
 }
 
 .tape-slider {
@@ -390,11 +385,11 @@ body {
 }
 
 .vhs-sticker-label {
-  margin-top: 4px;
-  font-size: 0.52rem;
+  margin-top: 6px;
+  font-size: 0.55rem;
   color: var(--text-color);
   background: #111;
-  padding: 2px 4px;
+  padding: 3px 4px;
   border: 1px solid #333;
   border-radius: 2px;
   width: 100%;
