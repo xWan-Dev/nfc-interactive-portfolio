@@ -12,26 +12,23 @@
 </head>
 <body>
 
-  <!-- Botón de Audio Retro (Esquina Superior Derecha) -->
-  <button id="sound-toggle" class="sound-btn" aria-label="Activar/Desactivar Sonido">
-    <span id="sound-icon">🔇</span>
-  </button>
-
   <!-- 1. Pantalla de Intro Retro 80s (Barra de Sangre & Cuchillo) -->
   <div id="intro-screen">
-    <p class="loading-title">LOADING PORTFOLIO...</p>
-    
-    <div class="loader-bar-container">
-      <div class="blood-trail" id="blood-trail"></div>
-      <img src="chucky-knife.png" 
-           alt="Cuchillo Chucky" 
-           class="knife-loader" 
-           id="knife-loader"
-           onerror="this.style.display='none'; document.getElementById('blood-trail').style.boxShadow='0 0 10px red'">
-    </div>
+    <div class="loader-container">
+      <p class="retro-title">LOADING PORTFOLIO...</p>
+      
+      <div class="progress-bar-track">
+        <div class="blood-trail" id="blood-trail"></div>
+        <img src="chucky-knife.png" 
+             alt="Cuchillo Chucky" 
+             class="knife-loader" 
+             id="knife-loader"
+             onerror="this.style.display='none'; document.querySelector('.blood-trail').style.boxShadow='0 0 10px red'">
+      </div>
 
-    <div class="load-percentage">
-      <span id="load-percentage">0</span>%
+      <div class="retro-counter">
+        <span id="load-percentage">0</span>%
+      </div>
     </div>
   </div>
 
@@ -39,59 +36,62 @@
   <div id="floating-gallery" class="floating-gallery"></div>
 
   <!-- 3. Contenedor Principal: TV CRT y Estantería VHS -->
-  <main class="main-wrapper">
-    
-    <!-- Televisor CRT Real -->
-    <div class="tv-container">
-      <img src="tv.png" alt="Televisor CRT Retro" class="tv-frame-img">
+  <main class="main-container">
+    <div class="retro-setup">
       
-      <div class="tv-screen">
-        <div class="tv-static" id="tv-static"></div>
-        <div class="tv-content" id="tv-content">
-          <h1 class="artist-name">Tu Nombre</h1>
-          <p class="artist-tagline">Arte & Ilustración 80s</p>
-          <p class="artist-bio">
-            Selecciona o desliza una cinta para reproducir contenido.
-          </p>
+      <!-- Televisor CRT Real -->
+      <div class="crt-tv-wrapper">
+        <img src="tv.png" alt="Televisor CRT Retro" class="tv-frame-img">
+        
+        <div class="tv-screen-area">
+          <div class="screen-content" id="tv-content">
+            <h1 class="artist-name">Tu Nombre</h1>
+            <p class="artist-tagline">Arte & Ilustración</p>
+            <p class="artist-bio">
+              Desliza y selecciona una cinta VHS...
+            </p>
+          </div>
+          <div class="scanlines"></div>
+          <div class="tv-static" id="tv-static"></div>
         </div>
       </div>
-    </div>
 
-    <!-- Estantería con Carrusel Horizontal VHS (4 Secciones SPA) -->
-    <div class="vhs-shelf">
-      <div class="shelf-header">
-        <span>◀</span>
-        <p>-- DESLIZA LAS CINTAS --</p>
-        <span>▶</span>
+      <!-- Estantería con Carrusel Horizontal VHS (4 Secciones SPA) -->
+      <div class="vhs-shelf">
+        <div class="shelf-header">
+          <span class="shelf-arrow">◀</span>
+          <p class="shelf-title">-- DESLIZA LAS CINTAS --</p>
+          <span class="shelf-arrow">▶</span>
+        </div>
+        
+        <div class="tape-slider" id="tape-slider">
+          <!-- Cinta 1: Inicio -->
+          <button class="vhs-tape-card" data-type="home">
+            <img src="vhs.png" alt="Cinta VHS Inicio" class="vhs-tape-img">
+            <span class="vhs-sticker-label">01 // INICIO</span>
+          </button>
+
+          <!-- Cinta 2: Galería / Obras -->
+          <button class="vhs-tape-card" data-type="gallery">
+            <img src="vhs.png" alt="Cinta VHS Galería" class="vhs-tape-img">
+            <span class="vhs-sticker-label">02 // GALERIA</span>
+          </button>
+
+          <!-- Cinta 3: Biografía -->
+          <button class="vhs-tape-card" data-type="bio">
+            <img src="vhs.png" alt="Cinta VHS Bio" class="vhs-tape-img">
+            <span class="vhs-sticker-label">03 // SOBRE MI</span>
+          </button>
+
+          <!-- Cinta 4: Contacto & Redes -->
+          <button class="vhs-tape-card" data-type="contact">
+            <img src="vhs.png" alt="Cinta VHS Contacto" class="vhs-tape-img">
+            <span class="vhs-sticker-label">04 // CONTACTO</span>
+          </button>
+        </div>
       </div>
-      
-      <div class="tape-slider" id="tape-slider">
-        <!-- Cinta 1: Inicio -->
-        <button class="vhs-tape-card" data-type="home">
-          <img src="vhs.png" alt="Cinta VHS Inicio" class="vhs-tape-img">
-          <span class="vhs-sticker-label">01 // INICIO</span>
-        </button>
 
-        <!-- Cinta 2: Galería / Obras -->
-        <button class="vhs-tape-card" data-type="gallery">
-          <img src="vhs.png" alt="Cinta VHS Galería" class="vhs-tape-img">
-          <span class="vhs-sticker-label">02 // GALERIA</span>
-        </button>
-
-        <!-- Cinta 3: Biografía -->
-        <button class="vhs-tape-card" data-type="bio">
-          <img src="vhs.png" alt="Cinta VHS Bio" class="vhs-tape-img">
-          <span class="vhs-sticker-label">03 // SOBRE MI</span>
-        </button>
-
-        <!-- Cinta 4: Contacto & Redes -->
-        <button class="vhs-tape-card" data-type="contact">
-          <img src="vhs.png" alt="Cinta VHS Contacto" class="vhs-tape-img">
-          <span class="vhs-sticker-label">04 // CONTACTO</span>
-        </button>
-      </div>
     </div>
-
   </main>
 
   <!-- Enlace a JavaScript -->
