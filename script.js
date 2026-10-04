@@ -1,4 +1,58 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // --- SINTETIZADOR DE EFECTOS DE SONIDO RETRO (WEB AUDIO API) ---
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+  // Reproduce un clic mecánico de botón / cinta VHS
+  function playClickSound() {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(120, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime + 0.08);
+    
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+    
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.08);
+  }
+
+  // Reproduce un chispazo de estática / cambio de canal CRT
+  function playStaticSound() {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    const bufferSize = audioCtx.sampleRate * 0.25; // 0.25 segundos de sonido
+    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const output = buffer.getChannelData(0);
+
+    for (let i = 0; i < bufferSize; i++) {
+      output[i] = Math.random() * 2 - 1; // Ruido blanco
+    }
+
+    const whiteNoise = audioCtx.createBufferSource();
+    whiteNoise.buffer = buffer;
+
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.value = 1000;
+
+    const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+
+    whiteNoise.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    whiteNoise.start();
+  }
+
   // --- 1. PANTALLA DE CARGA CON CUCHILLO ---
   const introScreen = document.getElementById("intro-screen");
   const bloodTrail = document.getElementById("blood-trail");
@@ -28,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "demo1.jpg",
     "demo2.jpg",
     "demo3.jpg",
+    "chucky-knife.png"
   ];
 
   if (floatingGallery) {
@@ -48,7 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const tvStatic = document.getElementById("tv-static");
   const tapeButtons = document.querySelectorAll(".vhs-tape-card");
 
-  // Estado de la galería interna de la TV
   let currentGalleryIndex = 0;
   const galleryImages = [
     "demo1.jpg",
@@ -56,8 +110,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "demo3.jpg"
   ];
 
-  // Función para simular cambio de canal con nieve/estática CRT
   function switchChannel(renderCallback) {
+    playStaticSound(); // Sonido de estática CRT
     if (tvStatic) tvStatic.classList.add("active");
     setTimeout(() => {
       renderCallback();
@@ -67,7 +121,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 200);
   }
 
-  // Plantillas HTML retro para cada cinta VHS
   const views = {
     home: () => `
       <div class="vhs-screen-layout">
@@ -112,9 +165,9 @@ document.addEventListener("DOMContentLoaded", () => {
     `
   };
 
-  // Asignar evento a las cintas VHS
   tapeButtons.forEach((button) => {
     button.addEventListener("click", () => {
+      playClickSound(); // Clic de inserción VHS
       const type = button.getAttribute("data-type");
       button.classList.add("ejecting");
       setTimeout(() => button.classList.remove("ejecting"), 300);
@@ -128,13 +181,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Eventos para los botones de anterior/siguiente en la Galería
   function bindGalleryEvents() {
     const prevBtn = document.getElementById("prev-art-btn");
     const nextBtn = document.getElementById("next-art-btn");
 
     if (prevBtn) {
       prevBtn.addEventListener("click", () => {
+        playClickSound(); // Clic cambio de obra
         currentGalleryIndex = (currentGalleryIndex - 1 + galleryImages.length) % galleryImages.length;
         switchChannel(() => {
           tvContent.innerHTML = views.gallery();
@@ -145,6 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (nextBtn) {
       nextBtn.addEventListener("click", () => {
+        playClickSound(); // Clic cambio de obra
         currentGalleryIndex = (currentGalleryIndex + 1) % galleryImages.length;
         switchChannel(() => {
           tvContent.innerHTML = views.gallery();
