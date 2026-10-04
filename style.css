@@ -1,0 +1,229 @@
+/* ==========================================
+   PALETA DE COLORES Y VARIABLES (Estética Chucky)
+   ========================================== */
+:root {
+  --bg-color: #0c0b0e;             /* Negro carbón profundo */
+  --card-bg: rgba(20, 18, 24, 0.88); /* Fondo de tarjeta oscuro semi-transparente */
+  --red-accent: #d61a1a;          /* Rojo sangre neón */
+  --red-dark: #660000;            /* Rojo oscuro / sombras */
+  
+  /* Tonos pastel icónicos de la saga (Overol / Camiseta) */
+  --pastel-blue: #a2c4c9;         /* Azul pastel tenue */
+  --pastel-yellow: #e8d595;       /* Amarillo pastel apagado */
+  --pastel-pink: #f28b82;         /* Rosa / rojo pastel */
+  --text-color: #f0f0f0;          /* Blanco roto */
+}
+
+/* ==========================================
+   ESTILOS GENERALES Y RESET
+   ========================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Montserrat', sans-serif;
+  overflow: hidden; /* Evita barras de desplazamiento en móvil */
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+/* ==========================================
+   1. PANTALLA DE INTRO (Efecto Cuchillo)
+   ========================================== */
+#intro-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.8s ease, visibility 0.8s;
+}
+
+.knife-container {
+  text-align: center;
+}
+
+.knife-slash {
+  width: 140px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--red-accent), #ffffff, transparent);
+  box-shadow: 0 0 20px var(--red-accent), 0 0 10px #ffffff;
+  animation: slashAnim 1.2s ease-in-out infinite alternate;
+  margin: 0 auto 20px auto;
+}
+
+.intro-text {
+  font-family: 'Creepster', cursive;
+  color: var(--red-accent);
+  letter-spacing: 4px;
+  font-size: 1.6rem;
+  text-shadow: 0 0 10px rgba(214, 26, 26, 0.7);
+}
+
+@keyframes slashAnim {
+  0% { 
+    transform: scaleX(0.2) rotate(-15deg); 
+    opacity: 0.3; 
+  }
+  100% { 
+    transform: scaleX(1.6) rotate(15deg); 
+    opacity: 1; 
+  }
+}
+
+/* Oculta la intro cuando el JS añade esta clase */
+.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* ==========================================
+   2. GALERÍA FLOTANTE (Fondo)
+   ========================================== */
+#floating-gallery {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Permite hacer clic en la tarjeta de contacto */
+  z-index: 1;
+}
+
+.floating-item {
+  position: absolute;
+  max-width: 160px;
+  width: 35vw;
+  height: auto;
+  border-radius: 8px;
+  opacity: 0;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(214, 26, 26, 0.4);
+  animation: floatFade infinite ease-in-out;
+}
+
+@keyframes floatFade {
+  0% { 
+    opacity: 0; 
+    transform: translateY(20px) scale(0.9); 
+  }
+  25% { 
+    opacity: 0.65; 
+  }
+  50% { 
+    transform: translateY(-15px) scale(1.02); 
+    opacity: 0.75; 
+  }
+  75% { 
+    opacity: 0.65; 
+  }
+  100% { 
+    opacity: 0; 
+    transform: translateY(-30px) scale(0.9); 
+  }
+}
+
+/* ==========================================
+   3. TARJETA CENTRAL DEL ARTISTA
+   ========================================== */
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  position: relative;
+  z-index: 10;
+}
+
+.artist-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--red-dark);
+  border-top: 2px solid var(--red-accent);
+  border-radius: 16px;
+  padding: 35px 25px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(214, 26, 26, 0.15);
+}
+
+.artist-name {
+  font-family: 'Creepster', cursive;
+  font-size: 2.5rem;
+  color: var(--pastel-pink);
+  text-shadow: 2px 2px 0px var(--red-dark);
+  margin-bottom: 5px;
+  letter-spacing: 2px;
+}
+
+.artist-tagline {
+  color: var(--pastel-blue);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.artist-bio {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--pastel-yellow);
+  margin-bottom: 30px;
+  font-weight: 300;
+}
+
+/* Botones de contacto */
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.btn-instagram {
+  background-color: var(--red-accent);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(214, 26, 26, 0.3);
+}
+
+.btn-instagram:hover {
+  background-color: #b51212;
+  box-shadow: 0 0 20px var(--red-accent);
+  transform: translateY(-2px);
+}
+
+.btn-email {
+  background-color: transparent;
+  color: var(--pastel-blue);
+  border: 1px solid var(--pastel-blue);
+}
+
+.btn-email:hover {
+  background-color: var(--pastel-blue);
+  color: var(--bg-color);
+  transform: translateY(-2px);
+}
