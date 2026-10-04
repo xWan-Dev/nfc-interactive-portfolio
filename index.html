@@ -19,7 +19,11 @@
       
       <div class="progress-bar-track">
         <div class="blood-trail" id="blood-trail"></div>
-        <img src="chucky-knife.png" alt="Cuchillo Chucky" class="knife-loader" id="knife-loader">
+        <img src="chucky-knife.png" 
+     alt="Cuchillo Chucky" 
+     class="knife-loader" 
+     id="knife-loader"
+     onerror="this.style.display='none'; document.querySelector('.blood-trail').style.boxShadow='0 0 10px red'">
       </div>
 
       <div class="retro-counter">
