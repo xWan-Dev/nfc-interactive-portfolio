@@ -451,3 +451,83 @@ body {
   width: 100%;
   text-align: center;
 }
+
+/* ==========================================
+   7. OPTIMIZACIÓN ESPECÍFICAS PARA MÓVIL (MOBILE FIRST)
+   ========================================== */
+@media screen and (max-width: 600px) {
+  
+  /* Ajustar contenedor principal al ancho de pantalla táctil */
+  .main-container {
+    padding: 8px;
+    max-width: 100vw;
+  }
+
+  /* Ajustes del marco CRT para smartphones */
+  .crt-tv-wrapper {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  /* Textos internos adaptados a pantallas reducidas */
+  .neon-title {
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+  }
+
+  .neon-title-sm {
+    font-size: 1.2rem;
+  }
+
+  .neon-subtitle {
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .vhs-prompt, .bio-text {
+    font-size: 0.6rem;
+    line-height: 1.2;
+  }
+
+  .vhs-badge {
+    font-size: 0.45rem;
+    padding: 2px 4px;
+    margin-bottom: 6px;
+  }
+
+  /* Visor de imágenes ajustado dentro del tubo en móvil */
+  .gallery-frame {
+    height: 60%;
+  }
+
+  .tv-btn {
+    font-size: 0.45rem;
+    padding: 6px 10px; /* Áreas de toque más grandes para dedos */
+  }
+
+  .retro-mail-btn {
+    font-size: 0.5rem;
+    padding: 8px 12px;
+  }
+
+  /* Estantería VHS táctil */
+  .vhs-shelf {
+    padding: 8px;
+    margin-top: 4px;
+  }
+
+  .tape-slider {
+    gap: 10px;
+    -webkit-overflow-scrolling: touch; /* Desplazamiento fluido en iOS */
+  }
+
+  .vhs-tape-card {
+    flex: 0 0 90px; /* Tamaño de cintas ajustado para móviles */
+  }
+
+  .vhs-sticker-label {
+    font-size: 0.5rem;
+    padding: 3px 2px;
+  }
+}
