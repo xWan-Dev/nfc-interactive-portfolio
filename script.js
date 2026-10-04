@@ -66,4 +66,53 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   }
+
+  // --- 3. LÓGICA DE INTERACCIÓN CINTAS VHS Y TELEVISOR CRT ---
+  const tapes = document.querySelectorAll(".vhs-tape");
+  const tvContent = document.getElementById("tv-content");
+  const tvStatic = document.getElementById("tv-static");
+
+  tapes.forEach((tape) => {
+    tape.addEventListener("click", () => {
+      const type = tape.getAttribute("data-type");
+      const url = tape.getAttribute("data-url");
+
+      // 1. Animación ligera de la cinta al seleccionarse
+      tape.classList.add("ejecting");
+
+      // 2. Activa el chispazo de estática en la TV
+      if (tvStatic) tvStatic.classList.add("active");
+
+      setTimeout(() => {
+        tape.classList.remove("ejecting");
+      }, 300);
+
+      // 3. Cambia el contenido del televisor a mitad de la estática
+      setTimeout(() => {
+        if (type === "instagram") {
+          tvContent.innerHTML = `
+            <h2 style="color:#ff0055; margin-bottom: 5px;">INSTAGRAM</h2>
+            <p style="font-size: 0.8rem; color: #a2c4c9;">Canal oficial de obras</p>
+            <a href="${url}" target="_blank" rel="noopener">▶ ABRIR PERFIL</a>
+          `;
+        } else if (type === "email") {
+          tvContent.innerHTML = `
+            <h2 style="color:#00ffff; margin-bottom: 5px;">CONTACTO</h2>
+            <p style="font-size: 0.8rem; color: #a2c4c9;">¿Encargos o colaboraciones?</p>
+            <a href="${url}">▶ ENVIAR CORREO</a>
+          `;
+        } else if (type === "bio") {
+          tvContent.innerHTML = `
+            <h2 style="color:#ffff00; margin-bottom: 5px;">SOBRE EL ARTISTA</h2>
+            <p style="font-size:0.8rem; line-height:1.3; color:#e8d595;">
+              Universo visual inspirado en el cine slasher de los 80, estética VHS y cultura pop oscura.
+            </p>
+          `;
+        }
+
+        // 4. Desactiva la estática para revelar el nuevo canal
+        if (tvStatic) tvStatic.classList.remove("active");
+      }, 600);
+    });
+  });
 });
