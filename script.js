@@ -1,159 +1,157 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ==========================================
-  // 1. SIMULACIÓN DE CARGA RETRO 80s
-  // ==========================================
+  // --- 1. PANTALLA DE CARGA CON CUCHILLO ---
   const introScreen = document.getElementById("intro-screen");
   const bloodTrail = document.getElementById("blood-trail");
   const knifeLoader = document.getElementById("knife-loader");
   const loadPercentage = document.getElementById("load-percentage");
 
   let progress = 0;
+  const loadInterval = setInterval(() => {
+    progress += Math.floor(Math.random() * 5) + 2;
+    if (progress > 100) progress = 100;
 
-  const simulateRetroLoading = () => {
-    if (progress < 100) {
-      const increment = Math.floor(Math.random() * 12) + 1;
-      progress = Math.min(progress + increment, 100);
+    if (bloodTrail) bloodTrail.style.width = `${progress}%`;
+    if (knifeLoader) knifeLoader.style.left = `${progress}%`;
+    if (loadPercentage) loadPercentage.textContent = progress;
 
-      if (bloodTrail) bloodTrail.style.width = `${progress}%`;
-      if (knifeLoader) knifeLoader.style.left = `${progress}%`;
-      if (loadPercentage) loadPercentage.textContent = progress;
-
-      const delay = Math.floor(Math.random() * 200) + 50;
-      setTimeout(simulateRetroLoading, delay);
-    } else {
+    if (progress >= 100) {
+      clearInterval(loadInterval);
       setTimeout(() => {
         if (introScreen) introScreen.classList.add("fade-out");
       }, 400);
     }
-  };
+  }, 40);
 
-  // Iniciar animación de carga
-  simulateRetroLoading();
+  // --- 2. GALERÍA FLOTANTE EN EL FONDO ---
+  const floatingGallery = document.getElementById("floating-gallery");
+  const sampleImages = [
+    "artwork1.jpg",
+    "artwork2.jpg",
+    "artwork3.jpg",
+    "chucky-knife.png"
+  ];
 
-  // ==========================================
-  // 2. GALERÍA FLOTANTE EN EL FONDO
-  // ==========================================
-  const imagenesObras = ["demo1.jpg", "demo2.jpg", "demo3.jpg"];
-  const galleryContainer = document.getElementById("floating-gallery");
-  const COPIAS_POR_IMAGEN = 4;
-
-  if (galleryContainer && imagenesObras.length > 0) {
-    let totalIndex = 0;
-
-    for (let i = 0; i < COPIAS_POR_IMAGEN; i++) {
-      imagenesObras.forEach((imgSrc) => {
-        const img = document.createElement("img");
-        img.src = imgSrc;
-        img.classList.add("floating-item");
-
-        const topPos = Math.floor(Math.random() * 75) + 5;
-        const leftPos = Math.floor(Math.random() * 75) + 5;
-        const duration = Math.floor(Math.random() * 5) + 7;
-        const delay = totalIndex * 1.2;
-
-        img.style.top = `${topPos}%`;
-        img.style.left = `${leftPos}%`;
-        img.style.animationDuration = `${duration}s`;
-        img.style.animationDelay = `${delay}s`;
-
-        galleryContainer.appendChild(img);
-        totalIndex++;
-      });
+  if (floatingGallery) {
+    for (let i = 0; i < 12; i++) {
+      const item = document.createElement("img");
+      item.src = sampleImages[i % sampleImages.length];
+      item.classList.add("floating-item");
+      item.style.left = `${Math.random() * 90}%`;
+      item.style.top = `${Math.random() * 90}%`;
+      item.style.animationDuration = `${8 + Math.random() * 10}s`;
+      item.style.animationDelay = `${Math.random() * 5}s`;
+      floatingGallery.appendChild(item);
     }
   }
 
-  // ==========================================
-  // 3. LÓGICA DE NAVEGACIÓN SPA Y GALERÍA EN LA TV
-  // ==========================================
-  const tapes = document.querySelectorAll(".vhs-tape-card");
+  // --- 3. REPRODUCTOR Y CAMBIO DE CINTAS VHS EN LA TV ---
   const tvContent = document.getElementById("tv-content");
   const tvStatic = document.getElementById("tv-static");
+  const tapeButtons = document.querySelectorAll(".vhs-tape-card");
 
-  // Lista de imágenes para la galería
-  const galeriaObras = [
-    { src: "demo1.jpg", titulo: "OBRA 01" },
-    { src: "demo2.jpg", titulo: "OBRA 02" },
-    { src: "demo3.jpg", titulo: "OBRA 03" }
+  // Estado de la galería interna de la TV
+  let currentGalleryIndex = 0;
+  const galleryImages = [
+    "artwork1.jpg",
+    "artwork2.jpg",
+    "artwork3.jpg"
   ];
-  let obraIndex = 0;
 
-  // Plantillas de contenido para las distintas cintas
-  const pages = {
-    home: `
-      <h1 class="artist-name">Tu Nombre</h1>
-      <p class="artist-tagline">Arte & Ilustración 80s</p>
-      <p class="artist-bio">Selecciona o desliza una cinta para reproducir contenido.</p>
+  // Función para simular cambio de canal con nieve/estática CRT
+  function switchChannel(renderCallback) {
+    if (tvStatic) tvStatic.classList.add("active");
+    setTimeout(() => {
+      renderCallback();
+      setTimeout(() => {
+        if (tvStatic) tvStatic.classList.remove("active");
+      }, 250);
+    }, 200);
+  }
+
+  // Plantillas HTML retro para cada cinta VHS
+  const views = {
+    home: () => `
+      <div class="vhs-screen-layout">
+        <h1 class="neon-title">TU NOMBRE</h1>
+        <p class="neon-subtitle">ARTE & ILUSTRACIÓN 80s</p>
+        <div class="vhs-badge">PLAY ▶ 0:00:01</div>
+        <p class="vhs-prompt">Selecciona o desliza una cinta para reproducir contenido.</p>
+      </div>
     `,
-    gallery: `
-      <div class="tv-gallery-viewer">
-        <p id="tv-artwork-title" class="gallery-title">${galeriaObras[0].titulo}</p>
-        <div class="gallery-img-frame">
-          <img id="tv-artwork-img" src="${galeriaObras[0].src}" alt="Obra" class="gallery-img">
+    gallery: () => `
+      <div class="tv-gallery-container">
+        <div class="gallery-header">
+          <span class="vhs-badge">OBRAS [${currentGalleryIndex + 1}/${galleryImages.length}]</span>
         </div>
-        <div class="gallery-controls">
-          <button id="btn-prev-obra" class="tv-btn">◀ ANTERIOR</button>
-          <button id="btn-next-obra" class="tv-btn">SIGUIENTE ▶</button>
+        <div class="gallery-frame">
+          <img src="${galleryImages[currentGalleryIndex]}" 
+               alt="Obra de Arte" 
+               class="gallery-display-img"
+               onerror="this.src='chucky-knife.png'">
+        </div>
+        <div class="gallery-nav">
+          <button id="prev-art-btn" class="tv-btn">◀ ANTERIOR</button>
+          <button id="next-art-btn" class="tv-btn">SIGUIENTE ▶</button>
         </div>
       </div>
     `,
-    bio: `
-      <h2 style="color:#ffff00; font-size:0.95rem; margin-bottom: 4px;">BIOGRAFÍA</h2>
-      <p style="font-size:0.58rem; line-height:1.25; color:#e8d595;">
-        Ilustración & Arte visual inspirado en el cine de terror de los 80s, slashers y estética VHS.
-      </p>
+    bio: () => `
+      <div class="vhs-screen-layout">
+        <h2 class="neon-title-sm">BIOGRAFÍA</h2>
+        <p class="bio-text">
+          Ilustración & Arte visual inspirado en el cine de terror de los 80s, slashers, estética VHS y la cultura pop retro.
+        </p>
+        <div class="vhs-badge">HI-FI STEREO</div>
+      </div>
     `,
-    contact: `
-      <h2 style="color:#ff0055; font-size:0.95rem; margin-bottom: 4px;">CONTACTO</h2>
-      <p style="font-size:0.58rem; color:#a2c4c9; margin-bottom: 6px;">COMISIONES Y DUDAS</p>
-      <a href="mailto:tu_correo@email.com">▶ ENVIAR MAIL</a>
+    contact: () => `
+      <div class="vhs-screen-layout">
+        <h2 class="neon-title-sm">CONTACTO</h2>
+        <p class="vhs-prompt">Comisiones y dudas de trabajo:</p>
+        <a href="mailto:tuemail@ejemplo.com" class="retro-mail-btn">▶ ENVIAR MAIL</a>
+      </div>
     `
   };
 
-  // Función para actualizar la imagen mostrada en la TV
-  const actualizarObra = (direccion) => {
-    obraIndex = (obraIndex + direccion + galeriaObras.length) % galeriaObras.length;
-    const imgEl = document.getElementById("tv-artwork-img");
-    const titleEl = document.getElementById("tv-artwork-title");
+  // Asignar evento a las cintas VHS
+  tapeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const type = button.getAttribute("data-type");
+      button.classList.add("ejecting");
+      setTimeout(() => button.classList.remove("ejecting"), 300);
 
-    if (imgEl && titleEl) {
-      imgEl.src = galeriaObras[obraIndex].src;
-      titleEl.textContent = galeriaObras[obraIndex].titulo;
-    }
-  };
-
-  // Escuchar clics en los botones dinámicos de la galería mediante delegación de eventos
-  if (tvContent) {
-    tvContent.addEventListener("click", (e) => {
-      if (e.target && e.target.id === "btn-prev-obra") {
-        actualizarObra(-1);
-      } else if (e.target && e.target.id === "btn-next-obra") {
-        actualizarObra(1);
+      if (views[type]) {
+        switchChannel(() => {
+          tvContent.innerHTML = views[type]();
+          if (type === "gallery") bindGalleryEvents();
+        });
       }
     });
-  }
-
-  // Interacción al pulsar sobre las cintas VHS
-  tapes.forEach((tape) => {
-    tape.addEventListener("click", () => {
-      const type = tape.getAttribute("data-type");
-
-      // Animación de expulsión ligera
-      tape.classList.add("ejecting");
-
-      // Ráfaga de estática CRT
-      if (tvStatic) tvStatic.classList.add("active");
-
-      setTimeout(() => {
-        tape.classList.remove("ejecting");
-      }, 300);
-
-      // Inyectar el nuevo contenido en la pantalla durante la estática
-      setTimeout(() => {
-        if (pages[type]) {
-          tvContent.innerHTML = pages[type];
-        }
-        if (tvStatic) tvStatic.classList.remove("active");
-      }, 450);
-    });
   });
+
+  // Eventos para los botones de anterior/siguiente en la Galería
+  function bindGalleryEvents() {
+    const prevBtn = document.getElementById("prev-art-btn");
+    const nextBtn = document.getElementById("next-art-btn");
+
+    if (prevBtn) {
+      prevBtn.addEventListener("click", () => {
+        currentGalleryIndex = (currentGalleryIndex - 1 + galleryImages.length) % galleryImages.length;
+        switchChannel(() => {
+          tvContent.innerHTML = views.gallery();
+          bindGalleryEvents();
+        });
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => {
+        currentGalleryIndex = (currentGalleryIndex + 1) % galleryImages.length;
+        switchChannel(() => {
+          tvContent.innerHTML = views.gallery();
+          bindGalleryEvents();
+        });
+      });
+    }
+  }
 });
