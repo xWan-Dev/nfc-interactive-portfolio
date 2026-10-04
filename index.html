@@ -31,27 +31,56 @@
   <!-- 2. Galería Flotante de Fondo (Generada dinámicamente por script.js) -->
   <div id="floating-gallery"></div>
 
-  <!-- 3. Tarjeta Central del Artista -->
-  <main class="main-container">
-    <section class="artist-card">
-      <h1 class="artist-name">Tu Nombre</h1>
-      <p class="artist-tagline">Arte & Ilustración</p>
-      
-      <p class="artist-bio">
-        Tu biografía aquí... Escribe una breve presentación de tu estilo y universo visual.
-      </p>
-
-      <div class="contact-links">
-        <a href="https://instagram.com/tu_usuario" target="_blank" rel="noopener" class="btn btn-instagram">
-          Instagram
-        </a>
-        <a href="mailto:tu_correo@email.com" class="btn btn-email">
-          Enviar Correo
-        </a>
+<!-- 3. Contenedor Principal: TV CRT y Estantería VHS -->
+<main class="main-container">
+  <!-- Mueble / Marco Retro -->
+  <div class="retro-setup">
+    
+    <!-- Televisor CRT -->
+    <div class="crt-tv-container" id="crt-tv">
+      <div class="tv-screen">
+        <div class="screen-content" id="tv-content">
+          <!-- Pantalla de bienvenida por defecto -->
+          <h1 class="artist-name">Tu Nombre</h1>
+          <p class="artist-tagline">Arte & Ilustración</p>
+          <p class="artist-bio">
+            Selecciona una cinta VHS de la estantería para cargar una sección...
+          </p>
+        </div>
+        <!-- Capas de efectos CRT (Líneas de escaneo y estática) -->
+        <div class="scanlines"></div>
+        <div class="tv-static" id="tv-static"></div>
       </div>
-    </section>
-  </main>
+      <!-- Marco exterior de la TV -->
+      <div class="vhs-slot-indicator">
+        <span class="vhs-label">VHS PLAYER</span>
+        <div class="vhs-slot-door" id="vhs-door"></div>
+      </div>
+    </div>
 
-  <script src="script.js"></script>
+    <!-- Estantería con Cintas VHS -->
+    <div class="vhs-shelf">
+      <p class="shelf-title">-- SELECCIONA UNA CINTA --</p>
+      
+      <div class="tape-list">
+        <!-- Cinta Instagram -->
+        <button class="vhs-tape" data-type="instagram" data-url="https://instagram.com/tu_usuario">
+          <span class="tape-spine">INSTAGRAM.vhs</span>
+        </button>
+
+        <!-- Cinta Email -->
+        <button class="vhs-tape" data-type="email" data-url="mailto:tu_correo@email.com">
+          <span class="tape-spine">CONTACTO_MAIL.vhs</span>
+        </button>
+
+        <!-- Cinta Bio/Portfolio -->
+        <button class="vhs-tape" data-type="bio" data-url="">
+          <span class="tape-spine">SOBRE_EL_ARTISTA.vhs</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</main>></script>
 </body>
 </html>
