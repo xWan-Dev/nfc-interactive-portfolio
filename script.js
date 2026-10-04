@@ -9,33 +9,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const simulateRetroLoading = () => {
     if (progress < 100) {
-      // Salto irregular de porcentaje (efecto lag 80s)
+      // Avanza a tirones irregulares
       const increment = Math.floor(Math.random() * 12) + 1;
       progress = Math.min(progress + increment, 100);
 
-      bloodTrail.style.width = `${progress}%`;
-      knifeLoader.style.left = `${progress}%`;
-      loadPercentage.textContent = progress;
+      if (bloodTrail) bloodTrail.style.width = `${progress}%`;
+      if (knifeLoader) knifeLoader.style.left = `${progress}%`;
+      if (loadPercentage) loadPercentage.textContent = progress;
 
-      // Pausa aleatoria entre saltos
       const delay = Math.floor(Math.random() * 370) + 80;
       setTimeout(simulateRetroLoading, delay);
     } else {
       setTimeout(() => {
-        introScreen.classList.add("fade-out");
+        if (introScreen) introScreen.classList.add("fade-out");
       }, 500);
     }
   };
 
   simulateRetroLoading();
 
-  // --- 2. GENERADOR DE GALERÍA FLOTANTE DE FONDO ---
-  // Añade aquí los nombres de tus imágenes cuando las subas a la raíz del proyecto
-  const imagenesObras = [
-    "obra1.jpg",
-    "obra2.jpg",
-    "obra3.jpg"
-  ];
+  // --- 2. GALERÍA FLOTANTE (Vacía por ahora) ---
+  const imagenesObras = []; // Subiremos las obras más adelante
 
   const galleryContainer = document.getElementById("floating-gallery");
 
@@ -45,7 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
       img.src = imgSrc;
       img.classList.add("floating-item");
 
-      // Posiciones y tiempos aleatorios para efecto orgánico
       const topPos = Math.floor(Math.random() * 70) + 10;
       const leftPos = Math.floor(Math.random() * 70) + 10;
       const duration = Math.floor(Math.random() * 6) + 8;
