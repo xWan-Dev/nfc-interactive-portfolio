@@ -12,56 +12,57 @@
 </head>
 <body>
 
+  <!-- Botón de Audio Retro (Esquina Superior Derecha) -->
+  <button id="sound-toggle" class="sound-btn" aria-label="Activar/Desactivar Sonido">
+    <span id="sound-icon">🔇</span>
+  </button>
+
   <!-- 1. Pantalla de Intro Retro 80s (Barra de Sangre & Cuchillo) -->
   <div id="intro-screen">
-    <div class="loader-container">
-      <p class="retro-title">LOADING PORTFOLIO...</p>
-      
-      <div class="progress-bar-track">
-        <div class="blood-trail" id="blood-trail"></div>
-        <img src="chucky-knife.png" 
-     alt="Cuchillo Chucky" 
-     class="knife-loader" 
-     id="knife-loader"
-     onerror="this.style.display='none'; document.querySelector('.blood-trail').style.boxShadow='0 0 10px red'">
-      </div>
+    <p class="loading-title">LOADING PORTFOLIO...</p>
+    
+    <div class="loader-bar-container">
+      <div class="blood-trail" id="blood-trail"></div>
+      <img src="chucky-knife.png" 
+           alt="Cuchillo Chucky" 
+           class="knife-loader" 
+           id="knife-loader"
+           onerror="this.style.display='none'; document.getElementById('blood-trail').style.boxShadow='0 0 10px red'">
+    </div>
 
-      <div class="retro-counter">
-        <span id="load-percentage">0</span>%
-      </div>
+    <div class="load-percentage">
+      <span id="load-percentage">0</span>%
     </div>
   </div>
 
   <!-- 2. Galería Flotante de Fondo -->
-  <div id="floating-gallery"></div>
+  <div id="floating-gallery" class="floating-gallery"></div>
 
-<!-- 3. Contenedor Principal: TV CRT y Estantería VHS -->
-<main class="main-container">
-  <div class="retro-setup">
+  <!-- 3. Contenedor Principal: TV CRT y Estantería VHS -->
+  <main class="main-wrapper">
     
     <!-- Televisor CRT Real -->
-    <div class="crt-tv-wrapper">
+    <div class="tv-container">
       <img src="tv.png" alt="Televisor CRT Retro" class="tv-frame-img">
       
-      <div class="tv-screen-area">
-        <div class="screen-content" id="tv-content">
+      <div class="tv-screen">
+        <div class="tv-static" id="tv-static"></div>
+        <div class="tv-content" id="tv-content">
           <h1 class="artist-name">Tu Nombre</h1>
-          <p class="artist-tagline">Arte & Ilustración</p>
+          <p class="artist-tagline">Arte & Ilustración 80s</p>
           <p class="artist-bio">
-            Desliza y selecciona una cinta VHS...
+            Selecciona o desliza una cinta para reproducir contenido.
           </p>
         </div>
-        <div class="scanlines"></div>
-        <div class="tv-static" id="tv-static"></div>
       </div>
     </div>
 
-<!-- Estantería con Carrusel Horizontal VHS (4 Secciones SPA) -->
+    <!-- Estantería con Carrusel Horizontal VHS (4 Secciones SPA) -->
     <div class="vhs-shelf">
       <div class="shelf-header">
-        <span class="shelf-arrow">◀</span>
-        <p class="shelf-title">-- DESLIZA LAS CINTAS --</p>
-        <span class="shelf-arrow">▶</span>
+        <span>◀</span>
+        <p>-- DESLIZA LAS CINTAS --</p>
+        <span>▶</span>
       </div>
       
       <div class="tape-slider" id="tape-slider">
@@ -91,10 +92,9 @@
       </div>
     </div>
 
-  </div>
-</main>
+  </main>
 
-  <!-- Enlace obligatorio a JavaScript (al final antes del cierre de body) -->
+  <!-- Enlace a JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
