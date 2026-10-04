@@ -28,8 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   simulateRetroLoading();
 
-  // --- 2. GALERÍA FLOTANTE DE PRUEBA ---
-  // Cambia estos nombres si tus imágenes de prueba se llaman distinto
+  // --- 2. GALERÍA FLOTANTE MULTIPLICADA (FONDO DINÁMICO) ---
   const imagenesObras = [
     "demo1.jpg",
     "demo2.jpg",
@@ -37,27 +36,34 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const galleryContainer = document.getElementById("floating-gallery");
+  const COPIAS_POR_IMAGEN = 4; // Multiplica cada imagen para llenar el fondo
 
   if (galleryContainer && imagenesObras.length > 0) {
-    imagenesObras.forEach((imgSrc, index) => {
-      const img = document.createElement("img");
-      img.src = imgSrc;
-      img.classList.add("floating-item");
+    let totalIndex = 0;
 
-      // Posiciones aleatorias distribuidas por la pantalla
-      const topPos = Math.floor(Math.random() * 65) + 10;
-      const leftPos = Math.floor(Math.random() * 65) + 10;
-      
-      // Duración y tiempos escalonados para que floten en bucle sin sincronizarse
-      const duration = Math.floor(Math.random() * 4) + 7; // Entre 7s y 10s
-      const delay = index * 2; // Desfase entre imágenes
+    // Duplicamos las imágenes para repartirlas por todo el canvas
+    for (let i = 0; i < COPIAS_POR_IMAGEN; i++) {
+      imagenesObras.forEach((imgSrc) => {
+        const img = document.createElement("img");
+        img.src = imgSrc;
+        img.classList.add("floating-item");
 
-      img.style.top = `${topPos}%`;
-      img.style.left = `${leftPos}%`;
-      img.style.animationDuration = `${duration}s`;
-      img.style.animationDelay = `${delay}s`;
+        // Distribuimos en un rango amplio de la pantalla (de 5% a 80%)
+        const topPos = Math.floor(Math.random() * 75) + 5;
+        const leftPos = Math.floor(Math.random() * 75) + 5;
+        
+        // Tiempos y duraciones aleatorias para evitar que aparezcan a la vez
+        const duration = Math.floor(Math.random() * 5) + 7; // Entre 7s y 12s
+        const delay = totalIndex * 1.2; // Aparición escalonada continua
 
-      galleryContainer.appendChild(img);
-    });
+        img.style.top = `${topPos}%`;
+        img.style.left = `${leftPos}%`;
+        img.style.animationDuration = `${duration}s`;
+        img.style.animationDelay = `${delay}s`;
+
+        galleryContainer.appendChild(img);
+        totalIndex++;
+      });
+    }
   }
 });
