@@ -2,16 +2,15 @@
    PALETA DE COLORES Y VARIABLES (Estética Chucky / Slasher 80s)
    ========================================== */
 :root {
-  --bg-color: #0c0b0e;             /* Negro carbón profundo */
-  --card-bg: rgba(20, 18, 24, 0.88); /* Fondo semi-transparente */
-  --red-accent: #d61a1a;          /* Rojo sangre neón */
-  --red-dark: #660000;            /* Rojo oscuro / sombras */
+  --bg-color: #0c0b0e;
+  --card-bg: rgba(20, 18, 24, 0.88);
+  --red-accent: #d61a1a;
+  --red-dark: #660000;
   
-  /* Tonos pastel icónicos */
-  --pastel-blue: #a2c4c9;         /* Azul pastel tenue */
-  --pastel-yellow: #e8d595;       /* Amarillo pastel apagado */
-  --pastel-pink: #f28b82;         /* Rosa / rojo pastel */
-  --text-color: #f0f0f0;          /* Blanco roto */
+  --pastel-blue: #a2c4c9;
+  --pastel-yellow: #e8d595;
+  --pastel-pink: #f28b82;
+  --text-color: #f0f0f0;
 }
 
 /* ==========================================
@@ -30,12 +29,12 @@ body {
   min-height: 100vh;
   width: 100vw;
   overflow-x: hidden;
-  overflow-y: auto; /* Permite scroll vertical en móviles pequeños si es necesario */
+  overflow-y: auto;
   position: relative;
 }
 
 /* ==========================================
-   1. PANTALLA DE INTRO RETRO 80s (Cuchillo y Sangre)
+   1. PANTALLA DE INTRO RETRO 80s
    ========================================== */
 #intro-screen {
   position: fixed;
@@ -83,32 +82,31 @@ body {
   height: 100%;
   width: 0%;
   background: linear-gradient(90deg, #660000, var(--red-accent));
+  box-shadow: 0 0 15px rgba(214, 26, 26, 0.5);
+  transition: width 0.15s ease-out;
 }
 
+/* CUCHILLO MEJORADO */
 .knife-loader {
   position: absolute;
-  top: -15px;
+  top: -25px;
   left: 0%;
-  height: 50px;
-  max-width: 35px;
+  height: 70px;
+  max-width: 50px;
   object-fit: contain;
   transform: translateX(-50%) rotate(90deg);
   transform-origin: center center;
   pointer-events: none;
-  z-index: 2;
-  transition: left 0.1s linear;
-  filter: drop-shadow(0 0 8px rgba(214, 26, 26, 0.9)) 
-          drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8));
-  animation: knifeSlash 0.8s ease-in-out infinite;
+  z-index: 10;
+  transition: left 0.15s ease-out;
+  filter: drop-shadow(0 0 12px rgba(214, 26, 26, 1)) 
+          drop-shadow(0 0 25px rgba(214, 26, 26, 0.6));
+  animation: knifeSlash 0.6s ease-in-out infinite;
 }
 
 @keyframes knifeSlash {
-  0%, 100% { 
-    transform: translateX(-50%) rotate(90deg); 
-  }
-  50% { 
-    transform: translateX(-50%) rotate(85deg) translateY(-3px); 
-  }
+  0%, 100% { transform: translateX(-50%) rotate(90deg) scale(1); }
+  50% { transform: translateX(-50%) rotate(85deg) scale(1.1); }
 }
 
 .retro-counter {
@@ -124,7 +122,7 @@ body {
 }
 
 /* ==========================================
-   2. GALERÍA FLOTANTE (Fondo)
+   2. GALERÍA FLOTANTE (MÁS SUTIL)
    ========================================== */
 #floating-gallery {
   position: fixed;
@@ -138,22 +136,30 @@ body {
 
 .floating-item {
   position: absolute;
-  max-width: 130px;
-  width: 30vw;
+  max-width: 90px;
+  width: 20vw;
   height: auto;
-  border-radius: 8px;
+  border-radius: 6px;
   opacity: 0;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.9);
-  border: 1px solid rgba(214, 26, 26, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(214, 26, 26, 0.25);
   animation: floatFade infinite ease-in-out;
+  filter: brightness(0.6) saturate(0.8);
 }
 
 @keyframes floatFade {
-  0% { opacity: 0; transform: translateY(20px) scale(0.9); }
-  25% { opacity: 0.65; }
-  50% { transform: translateY(-15px) scale(1.02); opacity: 0.75; }
-  75% { opacity: 0.65; }
-  100% { opacity: 0; transform: translateY(-30px) scale(0.9); }
+  0% { opacity: 0; transform: translateY(30px) scale(0.8); }
+  20% { opacity: 0.35; }
+  50% { transform: translateY(-20px) scale(0.95); opacity: 0.45; }
+  80% { opacity: 0.35; }
+  100% { opacity: 0; transform: translateY(-40px) scale(0.8); }
+}
+
+/* En móvil: ocultas directamente */
+@media (max-width: 768px) {
+  .floating-item {
+    display: none;
+  }
 }
 
 /* ==========================================
@@ -179,7 +185,7 @@ body {
 }
 
 /* ==========================================
-   4. TELEVISOR CRT REAL Y ÁREA DE PANTALLA
+   4. TELEVISOR CRT
    ========================================== */
 .crt-tv-wrapper {
   position: relative;
@@ -198,7 +204,6 @@ body {
   filter: drop-shadow(0 10px 20px rgba(0,0,0,0.95));
 }
 
-/* Cristal interior donde se proyecta la información */
 .tv-screen-area {
   position: absolute;
   top: 10%;
@@ -257,7 +262,7 @@ body {
   box-shadow: 0 0 8px var(--red-accent);
 }
 
-/* Efectos CRT: Líneas de escaneo y Estática */
+/* Efectos CRT */
 .scanlines {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
@@ -289,7 +294,7 @@ body {
 }
 
 /* ==========================================
-   5. ESTANTERÍA Y CARRUSEL HORIZONTAL VHS
+   5. ESTANTERÍA Y CARRUSEL VHS
    ========================================== */
 .vhs-shelf {
   width: 100%;
@@ -316,18 +321,28 @@ body {
   letter-spacing: 1px;
 }
 
+/* FLECHAS ANIMADAS */
+@keyframes arrowPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
 .shelf-arrow {
   color: var(--red-accent);
-  font-size: 0.75rem;
-  animation: pulse 1.2s infinite alternate;
+  font-size: 0.9rem;
+  animation: arrowPulse 1s infinite;
+  display: inline-block;
 }
 
-@keyframes pulse {
-  from { opacity: 0.4; }
-  to { opacity: 1; }
+.shelf-arrow:first-child {
+  animation-delay: 0s;
 }
 
-/* Contenedor deslizante por touch (Swipe) */
+.shelf-arrow:last-child {
+  animation-delay: 0.5s;
+}
+
+/* Contenedor deslizante */
 .tape-slider {
   display: flex;
   gap: 12px;
@@ -348,7 +363,7 @@ body {
 }
 
 .vhs-tape-card {
-  flex: 0 0 85%; /* Deja asomar la siguiente cinta */
+  flex: 0 0 85%;
   scroll-snap-align: center;
   position: relative;
   background: none;
