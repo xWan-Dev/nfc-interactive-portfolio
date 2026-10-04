@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Iniciar la barra de carga de inmediato
+  // Iniciar animación de carga
   simulateRetroLoading();
 
   // ==========================================
@@ -62,14 +62,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-// ==========================================
+  // ==========================================
   // 3. LÓGICA DE NAVEGACIÓN SPA Y GALERÍA EN LA TV
   // ==========================================
   const tapes = document.querySelectorAll(".vhs-tape-card");
   const tvContent = document.getElementById("tv-content");
   const tvStatic = document.getElementById("tv-static");
 
-  // Lista de imágenes para la galería en la TV
+  // Lista de imágenes para la galería
   const galeriaObras = [
     { src: "demo1.jpg", titulo: "OBRA 01" },
     { src: "demo2.jpg", titulo: "OBRA 02" },
@@ -77,19 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
   let obraIndex = 0;
 
-  // Función para renderizar la obra actual dentro de la TV
-  window.cambiarObra = (direccion) => {
-    obraIndex = (obraIndex + direccion + galeriaObras.length) % galeriaObras.length;
-    const imgEl = document.getElementById("tv-artwork-img");
-    const titleEl = document.getElementById("tv-artwork-title");
-    
-    if (imgEl && titleEl) {
-      imgEl.src = galeriaObras[obraIndex].src;
-      titleEl.textContent = galeriaObras[obraIndex].titulo;
-    }
-  };
-
-  // Plantillas de contenido para las cintas
+  // Plantillas de contenido para las distintas cintas
   const pages = {
     home: `
       <h1 class="artist-name">Tu Nombre</h1>
@@ -103,8 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <img id="tv-artwork-img" src="${galeriaObras[0].src}" alt="Obra" class="gallery-img">
         </div>
         <div class="gallery-controls">
-          <button onclick="cambiarObra(-1)" class="tv-btn">◀ ANTERIOR</button>
-          <button onclick="cambiarObra(1)" class="tv-btn">SIGUIENTE ▶</button>
+          <button id="btn-prev-obra" class="tv-btn">◀ ANTERIOR</button>
+          <button id="btn-next-obra" class="tv-btn">SIGUIENTE ▶</button>
         </div>
       </div>
     `,
@@ -121,6 +109,30 @@ document.addEventListener("DOMContentLoaded", () => {
     `
   };
 
+  // Función para actualizar la imagen mostrada en la TV
+  const actualizarObra = (direccion) => {
+    obraIndex = (obraIndex + direccion + galeriaObras.length) % galeriaObras.length;
+    const imgEl = document.getElementById("tv-artwork-img");
+    const titleEl = document.getElementById("tv-artwork-title");
+
+    if (imgEl && titleEl) {
+      imgEl.src = galeriaObras[obraIndex].src;
+      titleEl.textContent = galeriaObras[obraIndex].titulo;
+    }
+  };
+
+  // Escuchar clics en los botones dinámicos de la galería mediante delegación de eventos
+  if (tvContent) {
+    tvContent.addEventListener("click", (e) => {
+      if (e.target && e.target.id === "btn-prev-obra") {
+        actualizarObra(-1);
+      } else if (e.target && e.target.id === "btn-next-obra") {
+        actualizarObra(1);
+      }
+    });
+  }
+
+  // Interacción al pulsar sobre las cintas VHS
   tapes.forEach((tape) => {
     tape.addEventListener("click", () => {
       const type = tape.getAttribute("data-type");
@@ -135,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tape.classList.remove("ejecting");
       }, 300);
 
-      // Cambia la pantalla durante la estática
+      // Inyectar el nuevo contenido en la pantalla durante la estática
       setTimeout(() => {
         if (pages[type]) {
           tvContent.innerHTML = pages[type];
@@ -144,3 +156,4 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 450);
     });
   });
+});
