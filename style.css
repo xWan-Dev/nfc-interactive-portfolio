@@ -1,5 +1,5 @@
 /* ==========================================
-   PALETA DE COLORES Y VARIABLES (Estética Chucky)
+   PALETA DE COLORES Y VARIABLES (Estética Chucky / Slasher 80s)
    ========================================== */
 :root {
   --bg-color: #0c0b0e;             /* Negro carbón profundo */
@@ -168,7 +168,7 @@ body {
 }
 
 /* ==========================================
-   3. TARJETA CENTRAL DEL ARTISTA
+   3. TELEVISOR CRT Y ESTANTERÍA VHS
    ========================================== */
 .main-container {
   display: flex;
@@ -180,83 +180,199 @@ body {
   z-index: 10;
 }
 
-.artist-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--red-dark);
-  border-top: 2px solid var(--red-accent);
-  border-radius: 16px;
-  padding: 35px 25px;
-  max-width: 400px;
+.retro-setup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
   width: 100%;
-  text-align: center;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(214, 26, 26, 0.15);
+  max-width: 380px;
 }
 
-.artist-name {
+/* Cuerpo del Televisor */
+.crt-tv-container {
+  width: 100%;
+  background: #1a1918;
+  border: 10px solid #2d2a26;
+  border-radius: 20px;
+  padding: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.9), inset 0 0 15px rgba(255,255,255,0.05);
+  position: relative;
+}
+
+.tv-screen {
+  background: #050505;
+  border-radius: 12px;
+  height: 220px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid #000;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
+}
+
+.screen-content {
+  text-align: center;
+  color: #00ff66; /* Verde Fósforo CRT */
+  font-family: 'Courier New', Courier, monospace;
+  padding: 15px;
+  z-index: 2;
+  width: 100%;
+}
+
+.screen-content .artist-name {
   font-family: 'Creepster', cursive;
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: var(--pastel-pink);
   text-shadow: 2px 2px 0px var(--red-dark);
   margin-bottom: 5px;
-  letter-spacing: 2px;
 }
 
-.artist-tagline {
+.screen-content .artist-tagline {
   color: var(--pastel-blue);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.screen-content .artist-bio {
   font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 2.5px;
-  margin-bottom: 20px;
-  font-weight: 700;
-}
-
-.artist-bio {
-  font-size: 0.95rem;
-  line-height: 1.6;
+  line-height: 1.4;
   color: var(--pastel-yellow);
-  margin-bottom: 30px;
-  font-weight: 300;
 }
 
-/* Botones de contacto */
-.contact-links {
+.screen-content a {
+  display: inline-block;
+  color: #ffffff;
+  background-color: var(--red-accent);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-decoration: none;
+  margin-top: 12px;
+  box-shadow: 0 0 10px var(--red-accent);
+  transition: transform 0.2s;
+}
+
+.screen-content a:hover {
+  transform: scale(1.05);
+}
+
+/* Efecto Scanlines (Líneas horizontales TV) */
+.scanlines {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.35) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Estática de la TV */
+.tv-static {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: repeating-radial-gradient(circle at 50% 50%, #fff, #000 2px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 4;
+  transition: opacity 0.1s ease;
+}
+
+.tv-static.active {
+  opacity: 0.85;
+  animation: static-flicker 0.12s infinite;
+}
+
+@keyframes static-flicker {
+  0% { background-position: 0 0; }
+  50% { background-position: 8px 8px; }
+  100% { background-position: -5px 5px; }
+}
+
+/* Ranura VHS del lector */
+.vhs-slot-indicator {
+  margin-top: 10px;
+  background: #0d0d0d;
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #222;
+}
+
+.vhs-label {
+  color: #666;
+  font-size: 0.6rem;
+  letter-spacing: 1px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.vhs-slot-door {
+  width: 100px;
+  height: 6px;
+  background: #111;
+  border: 1px solid #333;
+}
+
+/* --- ESTANTERÍA VHS --- */
+.vhs-shelf {
+  width: 100%;
+  background: rgba(17, 17, 17, 0.95);
+  border: 1px solid var(--red-dark);
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+}
+
+.shelf-title {
+  color: var(--red-accent);
+  font-size: 0.85rem;
+  text-align: center;
+  margin-bottom: 10px;
+  font-family: 'Creepster', cursive;
+  letter-spacing: 1px;
+}
+
+.tape-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
-.btn {
-  text-decoration: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
-  display: block;
+.vhs-tape {
+  background: #222;
+  border: 1px solid #444;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 4px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.btn-instagram {
-  background-color: var(--red-accent);
-  color: #ffffff;
-  box-shadow: 0 4px 15px rgba(214, 26, 26, 0.3);
+.vhs-tape:hover {
+  background: var(--red-dark);
+  border-color: var(--red-accent);
+  transform: translateX(5px);
+  color: #fff;
 }
 
-.btn-instagram:hover {
-  background-color: #b51212;
-  box-shadow: 0 0 20px var(--red-accent);
-  transform: translateY(-2px);
-}
-
-.btn-email {
-  background-color: transparent;
-  color: var(--pastel-blue);
-  border: 1px solid var(--pastel-blue);
-}
-
-.btn-email:hover {
-  background-color: var(--pastel-blue);
-  color: var(--bg-color);
-  transform: translateY(-2px);
+/* Animación cuando se pulsa una cinta */
+.vhs-tape.ejecting {
+  transform: translateY(-20px) scale(0.9);
+  opacity: 0.4;
 }
