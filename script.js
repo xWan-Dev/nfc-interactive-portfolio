@@ -62,14 +62,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ==========================================
-  // 3. LÓGICA DE NAVEGACIÓN SPA EN LA TV
+// ==========================================
+  // 3. LÓGICA DE NAVEGACIÓN SPA Y GALERÍA EN LA TV
   // ==========================================
   const tapes = document.querySelectorAll(".vhs-tape-card");
   const tvContent = document.getElementById("tv-content");
   const tvStatic = document.getElementById("tv-static");
 
-  // Plantillas para las pantallas de la TV
+  // Lista de imágenes para la galería en la TV
+  const galeriaObras = [
+    { src: "demo1.jpg", titulo: "OBRA 01" },
+    { src: "demo2.jpg", titulo: "OBRA 02" },
+    { src: "demo3.jpg", titulo: "OBRA 03" }
+  ];
+  let obraIndex = 0;
+
+  // Función para renderizar la obra actual dentro de la TV
+  window.cambiarObra = (direccion) => {
+    obraIndex = (obraIndex + direccion + galeriaObras.length) % galeriaObras.length;
+    const imgEl = document.getElementById("tv-artwork-img");
+    const titleEl = document.getElementById("tv-artwork-title");
+    
+    if (imgEl && titleEl) {
+      imgEl.src = galeriaObras[obraIndex].src;
+      titleEl.textContent = galeriaObras[obraIndex].titulo;
+    }
+  };
+
+  // Plantillas de contenido para las cintas
   const pages = {
     home: `
       <h1 class="artist-name">Tu Nombre</h1>
@@ -77,9 +97,16 @@ document.addEventListener("DOMContentLoaded", () => {
       <p class="artist-bio">Selecciona o desliza una cinta para reproducir contenido.</p>
     `,
     gallery: `
-      <h2 style="color:#00ffff; font-size:0.95rem; margin-bottom: 4px;">GALERÍA DE OBRAS</h2>
-      <p style="font-size:0.58rem; color:#a2c4c9; margin-bottom: 6px;">PORTAFOLIO VISUAL</p>
-      <a href="https://instagram.com/tu_usuario" target="_blank" rel="noopener">▶ VER EN INSTAGRAM</a>
+      <div class="tv-gallery-viewer">
+        <p id="tv-artwork-title" class="gallery-title">${galeriaObras[0].titulo}</p>
+        <div class="gallery-img-frame">
+          <img id="tv-artwork-img" src="${galeriaObras[0].src}" alt="Obra" class="gallery-img">
+        </div>
+        <div class="gallery-controls">
+          <button onclick="cambiarObra(-1)" class="tv-btn">◀ ANTERIOR</button>
+          <button onclick="cambiarObra(1)" class="tv-btn">SIGUIENTE ▶</button>
+        </div>
+      </div>
     `,
     bio: `
       <h2 style="color:#ffff00; font-size:0.95rem; margin-bottom: 4px;">BIOGRAFÍA</h2>
@@ -98,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
     tape.addEventListener("click", () => {
       const type = tape.getAttribute("data-type");
 
-      // Animación ligera de expulsión
+      // Animación de expulsión ligera
       tape.classList.add("ejecting");
 
       // Ráfaga de estática CRT
@@ -108,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tape.classList.remove("ejecting");
       }, 300);
 
-      // Cambia el texto dentro de la TV
+      // Cambia la pantalla durante la estática
       setTimeout(() => {
         if (pages[type]) {
           tvContent.innerHTML = pages[type];
@@ -117,4 +144,3 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 450);
     });
   });
-});
