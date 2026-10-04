@@ -66,7 +66,6 @@ body {
   text-shadow: 0 0 8px var(--red-accent);
 }
 
-/* Pista de la barra de carga */
 .progress-bar-track {
   position: relative;
   width: 100%;
@@ -78,7 +77,6 @@ body {
   overflow: visible;
 }
 
-/* Rastro de sangre cargado */
 .blood-trail {
   position: absolute;
   top: 0;
@@ -90,15 +88,13 @@ body {
   border-radius: 2px 0 0 2px;
 }
 
-/* Icono del Cuchillo avanzando en horizontal */
 .knife-loader {
   position: absolute;
-  top: -22px; /* Ajusta la posición vertical respecto a la barra */
+  top: -22px;
   left: 0%;
-  height: 65px; /* Altura del archivo vertical */
+  height: 65px;
   width: auto;
   display: block;
-  /* Rotamos 90 grados y lo desplazamos para que el avance coincida con la punta/cuerpo */
   transform: translateX(-50%) rotate(90deg);
   transform-origin: center center;
   filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.9));
@@ -115,7 +111,6 @@ body {
   letter-spacing: 1px;
 }
 
-/* Oculta la intro cuando el JS añade esta clase */
 .fade-out {
   opacity: 0;
   visibility: hidden;
@@ -168,7 +163,7 @@ body {
 }
 
 /* ==========================================
-   3. TELEVISOR CRT Y ESTANTERÍA VHS (RETRO REALISTA)
+   3. TELEVISOR CRT Y ESTANTERÍA VHS (RECURSOS DE IMAGEN REALES)
    ========================================== */
 .main-container {
   display: flex;
@@ -184,68 +179,72 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
 }
 
-/* Mueble del Televisor CRT */
-.crt-tv-container {
-  width: 100%;
-  background: linear-gradient(145deg, #2b2520, #171412);
-  border: 4px solid #110e0c;
-  border-radius: 28px;
-  padding: 18px 18px 12px 18px;
-  box-shadow: 
-    0 20px 50px rgba(0, 0, 0, 0.95),
-    inset 0 2px 3px rgba(255, 255, 255, 0.15),
-    inset 0 -4px 10px rgba(0, 0, 0, 0.8);
+/* --- MARCO Y PANTALLA DE LA TV REAL --- */
+.crt-tv-wrapper {
   position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Pantalla de Cristal Abombada (Efecto Tubo CRT) */
-.tv-screen {
-  background: #000;
-  border-radius: 35px / 25px; /* Curvatura retro en las esquinas */
-  height: 220px;
-  position: relative;
+.tv-frame-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  z-index: 3;
+  pointer-events: none;
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.95));
+}
+
+/* Encaje del texto en el cristal hueco del televisor real */
+.tv-screen-area {
+  position: absolute;
+  top: 9%;
+  left: 6.5%;
+  width: 66%;
+  height: 77%;
+  background-color: #050505;
+  border-radius: 12px;
   overflow: hidden;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 10px solid #12100e;
-  box-shadow: 
-    inset 0 0 35px rgba(0, 0, 0, 1),
-    0 0 8px rgba(0, 0, 0, 0.8);
 }
 
 .screen-content {
   text-align: center;
   color: #00ff66;
   font-family: 'Courier New', Courier, monospace;
-  padding: 20px;
+  padding: 12px;
   z-index: 2;
   width: 100%;
 }
 
 .screen-content .artist-name {
   font-family: 'Creepster', cursive;
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   color: var(--pastel-pink);
-  text-shadow: 3px 3px 0px var(--red-dark), 0 0 10px var(--red-accent);
-  margin-bottom: 5px;
+  text-shadow: 2px 2px 0px var(--red-dark), 0 0 8px var(--red-accent);
+  margin-bottom: 4px;
 }
 
 .screen-content .artist-tagline {
   color: var(--pastel-blue);
-  font-size: 0.75rem;
-  letter-spacing: 2px;
-  margin-bottom: 12px;
+  font-size: 0.7rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
 }
 
 .screen-content .artist-bio {
-  font-size: 0.85rem;
-  line-height: 1.4;
+  font-size: 0.75rem;
+  line-height: 1.3;
   color: var(--pastel-yellow);
 }
 
@@ -253,95 +252,67 @@ body {
   display: inline-block;
   color: #ffffff;
   background-color: var(--red-accent);
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: 4px;
   font-weight: bold;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   text-decoration: none;
-  margin-top: 12px;
-  box-shadow: 0 0 12px var(--red-accent);
+  margin-top: 8px;
+  box-shadow: 0 0 10px var(--red-accent);
   transition: transform 0.2s;
   letter-spacing: 1px;
 }
 
-/* Reflejo Curvo sobre el Cristal de la Tele */
-.tv-screen::before {
-  content: "";
+/* Efectos de Pantalla CRT (Scanlines & Estática) */
+.scanlines {
   position: absolute;
-  top: 0; left: 0; right: 0; height: 50%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 100%);
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%);
+  background-size: 100% 4px;
+  z-index: 4;
   pointer-events: none;
+}
+
+.tv-static {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: repeating-radial-gradient(circle at 50% 50%, #fff, #000 2px);
+  opacity: 0;
   z-index: 5;
-  border-radius: 25px 25px 0 0;
+  pointer-events: none;
+  transition: opacity 0.1s ease;
 }
 
-/* Panel Frontal Inferior de la TV (Lector VCR + Dial + LED) */
-.vhs-slot-indicator {
-  margin-top: 12px;
-  background: #0f0d0c;
-  padding: 8px 14px;
-  border-radius: 6px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 2px solid #221d19;
-  box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+.tv-static.active {
+  opacity: 0.35;
+  animation: staticNoise 0.1s infinite;
 }
 
-.vhs-label {
-  color: #888;
-  font-size: 0.65rem;
-  letter-spacing: 1.5px;
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+@keyframes staticNoise {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-2px, 2px); }
+  100% { transform: translate(2px, -1px); }
 }
 
-/* Luz LED roja de encendido */
-.vhs-label::before {
-  content: "";
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  background-color: #ff0000;
-  border-radius: 50%;
-  box-shadow: 0 0 8px #ff0000;
-}
-
-.vhs-slot-door {
-  width: 120px;
-  height: 10px;
-  background: linear-gradient(180deg, #050505 0%, #1a1a1a 100%);
-  border: 1px solid #332d27;
-  border-radius: 2px;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.9);
-}
-
-/* --- ESTANTERÍA DE MADERA --- */
+/* --- ESTANTERÍA Y CINTAS VHS REALES --- */
 .vhs-shelf {
   width: 100%;
   background: linear-gradient(180deg, #2d1a0e 0%, #1a0f08 100%);
   border: 2px solid #3d2414;
-  border-bottom: 8px solid #120a05;
-  padding: 15px 12px;
+  border-bottom: 6px solid #120a05;
+  padding: 12px 10px;
   border-radius: 6px;
-  box-shadow: 
-    0 15px 25px rgba(0, 0, 0, 0.9),
-    inset 0 2px 0 rgba(255, 255, 255, 0.1);
-  position: relative;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.9);
 }
 
 .shelf-title {
   color: var(--pastel-yellow);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   font-family: 'Courier New', Courier, monospace;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
 .tape-list {
@@ -350,59 +321,51 @@ body {
   gap: 10px;
 }
 
-/* CINTAS VHS REALISTAS */
-.vhs-tape {
-  background: linear-gradient(180deg, #2b2b2b 0%, #141414 100%);
-  border: 1px solid #000;
-  border-left: 5px solid #000;
-  border-right: 5px solid #000;
-  border-radius: 3px;
-  padding: 6px 10px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+.vhs-tape-card {
   position: relative;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.15);
-  display: flex;
-  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 100%;
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-/* Etiqueta Adhesiva de la Cinta */
-.vhs-tape .tape-spine {
-  background: #f4f1ea;
-  color: #111;
+.vhs-tape-card:hover {
+  transform: translateY(-2px) scale(1.02);
+  filter: drop-shadow(0 0 6px rgba(214, 26, 26, 0.6));
+}
+
+.vhs-tape-img {
   width: 100%;
-  padding: 6px 12px;
+  height: auto;
+  display: block;
+  border-radius: 3px;
+}
+
+/* Pegatina Adhesiva montada sobre la zona central del VHS */
+.vhs-sticker-label {
+  position: absolute;
+  top: 31%;
+  left: 31%;
+  width: 38%;
+  height: 38%;
+  background: #f0ece1;
+  color: #111;
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold;
-  font-size: 0.85rem;
-  border-left: 4px solid var(--red-accent);
-  box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+  font-size: 0.7rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border-radius: 1px;
+  justify-content: center;
+  text-align: center;
+  border-left: 4px solid var(--red-accent);
+  box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+  padding: 2px 4px;
+  letter-spacing: 0.5px;
 }
 
-/* Detalle retro TDK / HI-FI en la etiqueta */
-.vhs-tape .tape-spine::after {
-  content: "VHS E-180";
-  font-size: 0.6rem;
-  color: #666;
-  font-weight: normal;
-}
-
-.vhs-tape:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 6px 15px rgba(214, 26, 26, 0.4);
-}
-
-.vhs-tape:hover .tape-spine {
-  background: #fff;
-  border-left-color: #ff0000;
-}
-
-.vhs-tape.ejecting {
-  transform: translateY(-25px) scale(0.85);
-  opacity: 0.2;
-}
+.vhs-tape-card.ejecting {
+  transform: translateY(-20px) scale(0.9);
+  opacity: 0.3;
 }
