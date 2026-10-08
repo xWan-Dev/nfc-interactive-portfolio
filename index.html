@@ -1,94 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>XPIRAL</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171310">
+  <meta name="description" content="Xpiral, artista ochentera. Descubre su trabajo y síguela en Instagram.">
+  <title>Xpiral — artista</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
-
-  <!-- 1. Pantalla de Intro Retro 80s -->
-  <div id="intro-screen">
-    <div class="loader-container">
-      <p class="retro-title">LOADING PORTFOLIO...</p>
-      
-      <div class="progress-bar-track">
-        <div class="blood-trail" id="blood-trail"></div>
-        <img src="chucky-knife.png" 
-             alt="Cuchillo Chucky" 
-             class="knife-loader" 
-             id="knife-loader"
-             onerror="this.style.display='none'; document.querySelector('.blood-trail').style.boxShadow='0 0 10px red'">
-      </div>
-
-      <div class="retro-counter">
-        <span id="load-percentage">0</span>%
-      </div>
+  <div class="loader" id="loader" aria-label="Cargando la página">
+    <div class="loader__inner">
+      <span class="eyebrow">XPIRAL · PORTFOLIO</span>
+      <svg class="loader__spiral" viewBox="0 0 200 200" role="img" aria-label="Espiral de carga">
+        <path class="loader__track" d="M100 100 C112 100 112 112 100 112 C84 112 84 88 100 88 C124 88 124 124 100 124 C70 124 70 76 100 76 C136 76 136 136 100 136 C56 136 56 64 100 64 C148 64 148 148 100 148 C42 148 42 52 100 52"/>
+        <path class="loader__fill" id="spiral-fill" d="M100 100 C112 100 112 112 100 112 C84 112 84 88 100 88 C124 88 124 124 100 124 C70 124 70 76 100 76 C136 76 136 136 100 136 C56 136 56 64 100 64 C148 64 148 148 100 148 C42 148 42 52 100 52"/>
+      </svg>
+      <div class="loader__status"><span>PREPARANDO LA GALERÍA</span><span id="load-percentage">0%</span></div>
     </div>
   </div>
 
-  <!-- 2. Galería Flotante de Fondo -->
-  <div id="floating-gallery" class="floating-gallery"></div>
+  <main class="page page--home">
+    <header class="topbar">
+      <a class="wordmark" href="index.html" aria-label="Xpiral, inicio">X<span>P</span>IRAL</a>
+      <span class="topbar__note">ARTISTA · ESPAÑA</span>
+    </header>
 
-  <!-- 3. Contenedor Principal: TV CRT y Estantería VHS -->
-  <main class="main-container">
-    <div class="retro-setup">
-      
-      <!-- Televisor CRT Real con Panel Interactivo Superpuesto -->
-      <div class="crt-tv-wrapper">
-        <img src="tv.png" alt="Televisor CRT Retro" class="tv-frame-img">
-        
-        <div class="tv-screen-area">
-          <div id="tv-static" class="tv-static"></div>
-          <div class="scanlines"></div>
-          <div id="tv-content" class="screen-content"></div>
-        </div>
-
-        <!-- ==========================================
-            PANEL DE BOTONES INTERACTIVOS SOBRE EL PNG
-            ========================================== -->
-        <div class="tv-interactive-panel">
-          <!-- Únicamente el dial grande superior derecho -->
-          <button class="tv-hotspot btn-big-dial" title="Siguiente Obra"></button>
-        </div>
-
-      </div>
-
-      <!-- Estantería con Carrusel Horizontal VHS -->
-      <div class="vhs-shelf">
-        <div class="shelf-header">
-          <span class="shelf-arrow">◀</span>
-          <p class="shelf-title">-- DESLIZA LAS CINTAS --</p>
-          <span class="shelf-arrow">▶</span>
-        </div>
-        
-        <div class="tape-slider" id="tape-slider">
-          <button class="vhs-tape-card" data-type="home">
-            <img src="vhs.png" alt="Cinta VHS Inicio" class="vhs-tape-img">
-            <span class="vhs-sticker-label">01 // INICIO</span>
-          </button>
-          <button class="vhs-tape-card" data-type="gallery">
-            <img src="vhs.png" alt="Cinta VHS Galería" class="vhs-tape-img">
-            <span class="vhs-sticker-label">02 // GALERIA</span>
-          </button>
-          <button class="vhs-tape-card" data-type="bio">
-            <img src="vhs.png" alt="Cinta VHS Bio" class="vhs-tape-img">
-            <span class="vhs-sticker-label">03 // SOBRE MI</span>
-          </button>
-          <button class="vhs-tape-card" data-type="contact">
-            <img src="vhs.png" alt="Cinta VHS Contacto" class="vhs-tape-img">
-            <span class="vhs-sticker-label">04 // CONTACTO</span>
-          </button>
+    <section class="intro" aria-labelledby="artist-name">
+      <div class="intro__copy">
+        <span class="eyebrow intro__eyebrow"><span class="status-dot"></span> PORTFOLIO PERSONAL</span>
+        <h1 id="artist-name">Xpiral<span class="intro__period">.</span></h1>
+        <p class="intro__bio">Artista ochentera</p>
+        <div class="intro__actions">
+          <a class="button button--primary" href="gallery.html">Explorar artworks <span aria-hidden="true">↗</span></a>
+          <a class="button button--outline" href="https://www.instagram.com/elenaxpiralart/" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a>
         </div>
       </div>
+      <div class="intro__art" aria-label="Selección de artworks de Xpiral">
+        <figure class="art-card art-card--one"><img src="demo1.jpg" alt="Artwork de Xpiral" fetchpriority="high"><figcaption>01 / OBRA</figcaption></figure>
+        <figure class="art-card art-card--two"><img src="demo3.jpg" alt="Artwork de Xpiral" fetchpriority="high"><figcaption>02 / OBRA</figcaption></figure>
+        <span class="art-orbit" aria-hidden="true">X</span>
+      </div>
+    </section>
 
-    </div>
+    <footer class="footer"><span>UN UNIVERSO VISUAL EN EXPANSIÓN</span><span>© XPIRAL</span></footer>
   </main>
-
-  <script src="script.js"></script>
 </body>
 </html>

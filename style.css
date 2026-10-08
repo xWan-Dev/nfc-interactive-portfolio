@@ -1,572 +1,108 @@
-/* ==========================================
-   1. VARIABLES GLOBALES Y FUENTES RETRO 80s
-   ========================================== */
-@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Press+Start+2P&family=Share+Tech+Mono&display=swap');
-
 :root {
-  --bg-color: #080808;
-  --text-color: #f0f0f0;
-  --red-accent: #ff1e1e;
-  --red-dark: #700000;
-  --neon-yellow: #ffee00;
-  --neon-cyan: #00f3ff;
-  --card-bg: rgba(18, 18, 18, 0.9);
+  color-scheme: dark;
+  --ink: #171310;
+  --paper: #f1ece3;
+  --muted: #a59c90;
+  --accent: #ff6248;
+  --line: rgba(241, 236, 227, .18);
+  --mono: "DM Mono", monospace;
+  --sans: "Space Grotesk", sans-serif;
 }
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+* { box-sizing: border-box; }
+html { min-width: 320px; background: var(--ink); }
+body { margin: 0; min-height: 100vh; background: var(--ink); color: var(--paper); font-family: var(--sans); }
+a { color: inherit; }
+button { font: inherit; }
+.page { width: min(1240px, 100%); min-height: 100svh; margin-inline: auto; padding: 30px clamp(22px, 6vw, 84px) 24px; display: flex; flex-direction: column; }
+.topbar { display: flex; justify-content: space-between; align-items: center; min-height: 38px; }
+.wordmark { text-decoration: none; font-size: 21px; line-height: 1; font-weight: 700; letter-spacing: -.09em; }
+.wordmark span { color: var(--accent); }
+.topbar__note, .eyebrow, .footer, .back-link, .art-card figcaption, .gallery-item__label { font-family: var(--mono); font-size: 10px; letter-spacing: .09em; }
+.topbar__note, .muted, .gallery-heading p { color: var(--muted); }
+.eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--muted); }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; background: var(--accent); box-shadow: 0 0 12px rgba(255, 98, 72, .6); }
+.intro { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 8vw, 110px); align-items: center; padding-block: clamp(64px, 11vh, 125px); }
+.intro__copy { position: relative; z-index: 1; }
+.intro h1, .gallery-heading h1 { margin: 23px 0 8px; font-size: clamp(72px, 11vw, 148px); line-height: .85; letter-spacing: -.095em; font-weight: 500; }
+.intro__period { color: var(--accent); }
+.intro__bio { margin: 25px 0 35px; font-size: clamp(19px, 2vw, 25px); letter-spacing: -.04em; }
+.intro__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.button { min-height: 50px; display: inline-flex; justify-content: center; align-items: center; gap: 28px; padding: 0 18px; border: 1px solid var(--paper); text-decoration: none; font-size: 13px; transition: background .2s, color .2s, border-color .2s, transform .2s; }
+.button:hover { transform: translateY(-2px); }
+.button--primary { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+.button--primary:hover { background: var(--paper); border-color: var(--paper); }
+.button--outline { color: var(--paper); }
+.button--outline:hover { color: var(--ink); background: var(--paper); }
+.intro__art { min-height: 400px; position: relative; display: grid; place-items: center; }
+.art-card { position: absolute; margin: 0; padding: 8px 8px 28px; background: #29231f; width: min(66%, 310px); box-shadow: 0 22px 70px #0008; }
+.art-card img { display: block; width: 100%; height: 340px; object-fit: cover; }
+.art-card figcaption { position: absolute; left: 12px; bottom: 10px; color: var(--muted); font-size: 8px; }
+.art-card--one { transform: rotate(-8deg) translate(-10%, 1%); }
+.art-card--two { transform: rotate(8deg) translate(15%, -2%); }
+.art-card--two img { object-position: center; }
+.art-orbit { position: absolute; right: 3%; top: 8%; width: 64px; height: 64px; display: grid; place-items: center; border: 1px solid var(--accent); border-radius: 50%; color: var(--accent); font-size: 23px; font-weight: 600; transform: rotate(12deg); }
+.footer { margin-top: auto; padding-top: 17px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 9px; }
+.footer a { color: var(--paper); text-decoration: none; }
+.footer a:hover { color: var(--accent); }
+.back-link { text-decoration: none; color: var(--muted); }
+.back-link:hover { color: var(--paper); }
+.gallery-heading { padding: clamp(68px, 10vh, 120px) 0 36px; }
+.gallery-heading h1 { font-size: clamp(62px, 9vw, 112px); margin-top: 18px; }
+.gallery-heading p { margin: 18px 0 0; font-size: 16px; }
+.art-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding-bottom: 70px; }
+.gallery-item { appearance: none; border: 0; padding: 0; min-width: 0; position: relative; display: block; overflow: hidden; background: #28221e; color: var(--paper); cursor: zoom-in; text-align: left; }
+.gallery-item--wide { grid-column: 1 / -1; }
+.gallery-item img { display: block; width: 100%; height: clamp(230px, 34vw, 440px); object-fit: cover; transition: transform .45s cubic-bezier(.2,.7,.2,1), opacity .3s; }
+.gallery-item--wide img { height: clamp(280px, 48vw, 590px); object-position: center 46%; }
+.gallery-item:hover img { transform: scale(1.025); opacity: .82; }
+.gallery-item__label { position: absolute; inset: auto 0 0; display: flex; justify-content: space-between; align-items: center; padding: 15px 17px; background: linear-gradient(transparent, #000b); color: white; }
+.gallery-item__label span { color: #ddd; font-size: 9px; }
+.lightbox { width: min(94vw, 1100px); max-width: none; max-height: 92svh; padding: 36px 62px 24px; border: 1px solid var(--line); background: #171310; color: var(--paper); }
+.lightbox::backdrop { background: #090807eF; backdrop-filter: blur(8px); }
+.lightbox figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.lightbox img { display: block; max-width: 100%; max-height: 78svh; object-fit: contain; }
+.lightbox figcaption { color: var(--muted); font: 10px var(--mono); letter-spacing: .08em; }
+.lightbox__close, .lightbox__nav { position: absolute; border: 0; padding: 6px 10px; color: var(--paper); background: transparent; cursor: pointer; font-size: 28px; }
+.lightbox__close { right: 13px; top: 8px; }
+.lightbox__nav { top: 50%; transform: translateY(-50%); }
+.lightbox__nav--prev { left: 10px; }
+.lightbox__nav--next { right: 10px; }
+.lightbox__close:hover, .lightbox__nav:hover { color: var(--accent); }
+.loader { position: fixed; z-index: 10; inset: 0; display: grid; place-items: center; background: var(--ink); transition: opacity .55s ease, visibility .55s ease; }
+.loader.is-done { opacity: 0; visibility: hidden; pointer-events: none; }
+.loader__inner { width: min(310px, 78vw); }
+.loader__inner > .eyebrow { display: flex; justify-content: center; }
+.loader__spiral { display: block; width: min(250px, 64vw); margin: 12px auto; overflow: visible; }
+.loader__track, .loader__fill { fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.loader__track { stroke: #423a33; }
+.loader__fill { stroke: var(--accent); filter: drop-shadow(0 0 5px #ff624866); }
+.loader__status { display: flex; justify-content: space-between; color: var(--muted); font: 9px var(--mono); letter-spacing: .08em; }
+.loader__status span:last-child { color: var(--paper); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+@media (max-width: 700px) {
+  .page { padding: 22px 22px 18px; }
+  .intro { grid-template-columns: 1fr; gap: 28px; padding-block: 72px 40px; }
+  .intro h1 { margin-top: 20px; }
+  .intro__bio { margin: 19px 0 27px; }
+  .intro__art { min-height: 330px; }
+  .art-card { width: min(65%, 260px); }
+  .art-card img { height: 280px; }
+  .art-orbit { right: 1%; top: 2%; }
+  .gallery-heading { padding: 70px 0 28px; }
+  .art-grid { gap: 10px; padding-bottom: 52px; }
+  .gallery-item img { height: 56vw; }
+  .gallery-item--wide img { height: 65vw; }
+  .lightbox { padding: 42px 42px 20px; }
+  .lightbox img { max-height: 75svh; }
+  .footer { font-size: 8px; }
 }
-
-body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-family: 'Share Tech Mono', monospace;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow-x: hidden;
+@media (max-width: 420px) {
+  .topbar__note { font-size: 8px; }
+  .button { flex: 1 1 100%; justify-content: space-between; }
+  .intro__art { min-height: 290px; }
+  .art-card img { height: 245px; }
+  .footer { align-items: flex-start; }
 }
-
-/* ==========================================
-   2. PANTALLA DE CARGA (INTRO CUCHILLO)
-   ========================================== */
-#intro-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #000;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.8s ease, visibility 0.8s ease;
-}
-
-#intro-screen.fade-out {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.retro-title {
-  color: var(--red-accent);
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.8rem;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
-  text-shadow: 0 0 10px var(--red-dark);
-}
-
-.progress-bar-track {
-  position: relative;
-  width: 260px;
-  height: 16px;
-  border: 2px solid var(--red-accent);
-  border-radius: 4px;
-  background-color: #111;
-  box-shadow: 0 0 12px var(--red-dark);
-}
-
-.blood-trail {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #600000, #ff0000);
-  transition: width 0.1s linear;
-}
-
-.knife-loader {
-  position: absolute;
-  top: 50%;
-  left: 0%;
-  transform: translate(-100%, -50%);
-  width: 28px;
-  height: auto;
-  transition: left 0.1s linear;
-  pointer-events: none;
-}
-
-.retro-counter {
-  margin-top: 12px;
-  color: var(--neon-yellow);
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.7rem;
-}
-
-/* ==========================================
-   3. GALERÍA FLOTANTE DE FONDO
-   ========================================== */
-.floating-gallery {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.floating-item {
-  position: absolute;
-  width: 80px;
-  height: auto;
-  opacity: 0.12;
-  filter: grayscale(100%) contrast(150%);
-  animation: floatBg linear infinite;
-}
-
-@keyframes floatBg {
-  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-  20% { opacity: 0.15; }
-  80% { opacity: 0.15; }
-  100% { transform: translateY(-120px) rotate(20deg); opacity: 0; }
-}
-
-/* ==========================================
-   4. MARCO TELEVISOR CRT Y PANTALLA INTELIGENTE
-   ========================================== */
-.main-container {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-}
-
-.retro-setup {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.crt-tv-wrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1024 / 725;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.tv-frame-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  z-index: 5;
-  pointer-events: none;
-}
-
-/* Zona exacta del cristal de la TV */
-.tv-screen-area {
-  position: absolute;
-  top: 12%;
-  left: 8.8%;
-  width: 64.2%;
-  height: 68.5%;
-  background-color: #000;
-  border-radius: 12px / 16px;
-  overflow: hidden;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Capa de Estática CRT */
-.tv-static {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100% !important;
-  height: 100% !important;
-  background-image: url('static.gif');
-  background-size: 100% 100% !important;
-  background-position: center !important;
-  background-repeat: no-repeat;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 10;
-  transition: opacity 0.05s ease;
-}
-
-.tv-static.active {
-  opacity: 1;
-}
-
-/* Líneas Scanlines CRT */
-.scanlines {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%, 
-    rgba(0, 0, 0, 0.4) 50%
-  );
-  background-size: 100% 4px;
-  z-index: 4;
-  pointer-events: none;
-}
-
-/* Contenido dentro de la TV */
-.screen-content {
-  position: relative;
-  z-index: 3;
-  width: 100%;
-  height: 100%;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-}
-
-/* ==========================================
-   5. VISTAS INTERNAS (ESTÉTICA TERROR 80s)
-   ========================================== */
-.vhs-screen-layout {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-}
-
-.neon-title {
-  font-family: 'Creepster', cursive;
-  font-size: 2rem;
-  color: var(--red-accent);
-  text-shadow: 0 0 10px var(--red-dark), 0 0 20px #000;
-  letter-spacing: 3px;
-  margin-bottom: 4px;
-}
-
-.neon-title-sm {
-  font-family: 'Creepster', cursive;
-  font-size: 1.6rem;
-  color: var(--neon-yellow);
-  text-shadow: 0 0 8px var(--red-dark);
-  margin-bottom: 8px;
-}
-
-.neon-subtitle {
-  color: var(--neon-cyan);
-  font-size: 0.75rem;
-  letter-spacing: 2px;
-  margin-bottom: 12px;
-  text-shadow: 0 0 5px var(--neon-cyan);
-}
-
-.vhs-badge {
-  background: #000;
-  color: #00ff00;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.55rem;
-  padding: 3px 6px;
-  border: 1px solid #00ff00;
-  margin-bottom: 10px;
-}
-
-.vhs-prompt {
-  color: var(--neon-yellow);
-  font-size: 0.7rem;
-  max-width: 85%;
-  line-height: 1.3;
-}
-
-.bio-text {
-  color: #e0e0e0;
-  font-size: 0.68rem;
-  line-height: 1.4;
-  max-width: 90%;
-  margin-bottom: 12px;
-}
-
-.retro-mail-btn {
-  display: inline-block;
-  color: var(--neon-cyan);
-  text-decoration: none;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.6rem;
-  border: 1px solid var(--neon-cyan);
-  padding: 6px 10px;
-  margin-top: 10px;
-  transition: all 0.2s ease;
-  background: rgba(0, 243, 255, 0.1);
-}
-
-.retro-mail-btn:hover {
-  background: var(--neon-cyan);
-  color: #000;
-}
-
-/* --- VISOR DE LA GALERÍA --- */
-.tv-gallery-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.gallery-header {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.gallery-frame {
-  width: 100%;
-  height: 65%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  border: 1px solid #333;
-  background: #050505;
-}
-
-.gallery-display-img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.gallery-nav {
-  display: flex;
-  gap: 10px;
-}
-
-.tv-btn {
-  background: #151515;
-  color: var(--neon-yellow);
-  border: 1px solid var(--red-accent);
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.5rem;
-  padding: 4px 8px;
-  cursor: pointer;
-  border-radius: 2px;
-}
-
-.tv-btn:active {
-  background: var(--red-accent);
-  color: #fff;
-}
-
-/* ==========================================
-   6. CARRUSEL DE CINTAS VHS
-   ========================================== */
-.vhs-shelf {
-  width: 100%;
-  margin-top: 8px;
-  background: var(--card-bg);
-  border: 1px solid var(--red-dark);
-  border-radius: 6px;
-  padding: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
-}
-
-.shelf-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-  color: var(--neon-yellow);
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.55rem;
-}
-
-.shelf-arrow {
-  color: var(--red-accent);
-}
-
-.tape-slider {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 4px;
-}
-
-.tape-slider::-webkit-scrollbar {
-  height: 4px;
-}
-
-.tape-slider::-webkit-scrollbar-thumb {
-  background: var(--red-accent);
-  border-radius: 2px;
-}
-
-.vhs-tape-card {
-  flex: 0 0 100px;
-  scroll-snap-align: start;
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform 0.2s ease;
-}
-
-.vhs-tape-card.ejecting {
-  transform: translateY(-8px);
-}
-
-.vhs-tape-img {
-  width: 100%;
-  height: auto;
-  border-radius: 3px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
-}
-
-.vhs-sticker-label {
-  margin-top: 5px;
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 0.55rem;
-  color: #fff;
-  background: #111;
-  padding: 2px 4px;
-  border: 1px solid #333;
-  width: 100%;
-  text-align: center;
-}
-
-/* ==========================================
-   7. OPTIMIZACIÓN MÓVIL
-   ========================================== */
-@media screen and (max-width: 600px) {
-  .main-container {
-    padding: 8px;
-    max-width: 100vw;
-  }
-
-  .crt-tv-wrapper {
-    width: 100%;
-    margin-bottom: 5px;
-  }
-
-  .neon-title {
-    font-size: 1.4rem;
-    letter-spacing: 1px;
-  }
-
-  .neon-title-sm {
-    font-size: 1.2rem;
-  }
-
-  .neon-subtitle {
-    font-size: 0.65rem;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-  }
-
-  .vhs-prompt, .bio-text {
-    font-size: 0.6rem;
-    line-height: 1.2;
-  }
-
-  .vhs-badge {
-    font-size: 0.45rem;
-    padding: 2px 4px;
-    margin-bottom: 6px;
-  }
-
-  .gallery-frame {
-    height: 60%;
-  }
-
-  .tv-btn {
-    font-size: 0.45rem;
-    padding: 6px 10px;
-  }
-
-  .retro-mail-btn {
-    font-size: 0.5rem;
-    padding: 8px 12px;
-  }
-
-  .vhs-shelf {
-    padding: 8px;
-    margin-top: 4px;
-  }
-
-  .tape-slider {
-    gap: 10px;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .vhs-tape-card {
-    flex: 0 0 90px;
-  }
-
-  .vhs-sticker-label {
-    font-size: 0.5rem;
-    padding: 3px 2px;
-  }
-}
-
-/* ==========================================
-   8. PANEL INTERACTIVO DE LA TELEVISIÓN
-   ========================================== */
-.tv-interactive-panel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 6;
-  pointer-events: none;
-}
-
-.tv-hotspot {
-  position: absolute;
-  pointer-events: auto;
-  /* IMPORTANTE: Si quieres que sea totalmente invisible quita las siguientes dos líneas de fondo/borde */
-  background: rgba(0, 243, 255, 0.0); 
-  border: 1px dashed rgba(0, 243, 255, 0.0);
-  cursor: pointer;
-  border-radius: 50%;
-  transition: all 0.2s ease;
-}
-
-/* Efecto visual al pasar el ratón por encima del dial */
-.tv-hotspot:hover {
-  background: rgba(0, 243, 255, 0.2);
-  border: 1px solid var(--neon-cyan);
-  box-shadow: 0 0 10px var(--neon-cyan);
-}
-
-.tv-hotspot:active {
-  background: rgba(255, 30, 30, 0.4);
-}
-
-/* --- COORDENADA EXACTA DEL DIAL GRANDE (PERILLA SUPERIOR) --- */
-.btn-big-dial {
-  top: 50.5%;
-  right: 8.5%;
-  width: 12.5%;
-  height: 18%;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }

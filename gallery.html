@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171310">
+  <meta name="description" content="Galería de artworks de Xpiral.">
+  <title>Artworks — Xpiral</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="page page--gallery">
+    <header class="topbar">
+      <a class="wordmark" href="index.html" aria-label="Xpiral, inicio">X<span>P</span>IRAL</a>
+      <a class="back-link" href="index.html"><span aria-hidden="true">←</span> INICIO</a>
+    </header>
+    <section class="gallery-heading" aria-labelledby="gallery-title">
+      <span class="eyebrow"><span class="status-dot"></span> ARCHIVO VISUAL · 2026</span>
+      <h1 id="gallery-title">Artworks<span class="intro__period">.</span></h1>
+      <p>Una pequeña selección del universo de Xpiral.</p>
+    </section>
+    <section class="art-grid" aria-label="Obras de Xpiral">
+      <button class="gallery-item gallery-item--wide" type="button" data-image="demo1.jpg" data-title="Artwork 01">
+        <img src="demo1.jpg" alt="Artwork 01 de Xpiral" loading="lazy"><span class="gallery-item__label">01 <span>VER OBRA ↗</span></span>
+      </button>
+      <button class="gallery-item" type="button" data-image="demo2.jpg" data-title="Artwork 02">
+        <img src="demo2.jpg" alt="Artwork 02 de Xpiral" loading="lazy"><span class="gallery-item__label">02 <span>VER OBRA ↗</span></span>
+      </button>
+      <button class="gallery-item" type="button" data-image="demo3.jpg" data-title="Artwork 03">
+        <img src="demo3.jpg" alt="Artwork 03 de Xpiral" loading="lazy"><span class="gallery-item__label">03 <span>VER OBRA ↗</span></span>
+      </button>
+    </section>
+    <footer class="footer"><span>HECHO PARA MIRAR DE CERCA</span><a href="https://www.instagram.com/elenaxpiralart/" target="_blank" rel="noopener noreferrer">MÁS EN INSTAGRAM ↗</a></footer>
+  </main>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Vista ampliada de la obra">
+    <button class="lightbox__close" type="button" aria-label="Cerrar">×</button>
+    <button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="Obra anterior">←</button>
+    <figure><img id="lightbox-image" src="" alt=""><figcaption id="lightbox-caption"></figcaption></figure>
+    <button class="lightbox__nav lightbox__nav--next" type="button" aria-label="Obra siguiente">→</button>
+  </dialog>
+</body>
+</html>
