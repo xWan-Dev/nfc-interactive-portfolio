@@ -1,6 +1,4 @@
 (() => {
-  const artworkPaths = ["demo1.jpg", "demo2.jpg", "demo3.jpg"];
-
   function setupLoader() {
     const loader = document.getElementById("loader");
     if (!loader) return;
@@ -11,31 +9,29 @@
     spiral.style.strokeDasharray = String(length);
     spiral.style.strokeDashoffset = String(length);
 
-    const images = artworkPaths.map((src) => new Promise((resolve) => {
-      const image = new Image();
-      image.onload = () => resolve();
-      image.onerror = () => resolve();
-      image.src = src;
-      if (image.complete) resolve();
-    }));
-
+    // Simulación deliberada del ritmo de carga de una página clásica:
+    // el progreso acelera y se detiene brevemente en algunos tramos.
+    const loadingBeats = [
+      [0, 0], [550, 12], [1250, 31], [1750, 34], [2450, 61],
+      [2950, 65], [3650, 88], [4100, 91], [4650, 100]
+    ];
     const startedAt = performance.now();
-    let loaded = 0;
-    images.forEach((image) => image.then(() => { loaded += 1; }));
-    const minDuration = 1200;
 
     function frame(now) {
-      const elapsed = now - startedAt;
-      const timeProgress = Math.min(82, elapsed / 1500 * 82);
-      const imageProgress = loaded / artworkPaths.length * 96;
-      const progress = Math.min(96, Math.max(timeProgress, imageProgress));
-      spiral.style.strokeDashoffset = String(length * (1 - progress / 100));
-      percentage.textContent = Math.floor(progress) + "%";
+      const elapsed = Math.min(now - startedAt, loadingBeats[loadingBeats.length - 1][0]);
+      let segment = 1;
+      while (segment < loadingBeats.length && elapsed > loadingBeats[segment][0]) segment += 1;
 
-      if (loaded === artworkPaths.length && elapsed >= minDuration) {
-        spiral.style.strokeDashoffset = "0";
-        percentage.textContent = "100%";
-        window.setTimeout(() => loader.classList.add("is-done"), 240);
+      const [startTime, startProgress] = loadingBeats[segment - 1];
+      const [endTime, endProgress] = loadingBeats[Math.min(segment, loadingBeats.length - 1)];
+      const position = (elapsed - startTime) / (endTime - startTime);
+      const progress = Math.round(startProgress + (endProgress - startProgress) * position);
+
+      spiral.style.strokeDashoffset = String(length * (1 - progress / 100));
+      percentage.textContent = progress + "%";
+
+      if (elapsed >= loadingBeats[loadingBeats.length - 1][0]) {
+        window.setTimeout(() => loader.classList.add("is-done"), 260);
         return;
       }
       window.requestAnimationFrame(frame);
